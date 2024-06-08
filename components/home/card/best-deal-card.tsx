@@ -21,7 +21,8 @@ export const BestDealCard = ({ product }: Props) => {
     const { addToCart } = useCart()
 
     const handleAddToCart = () => {
-        addToCart({...product, price:product.discountPrice || product.price}, 1)
+        const price = product.discountPrice || product.price
+        addToCart({product, price, quantity:1})
         toast.success("Added to cart")
     }
 
