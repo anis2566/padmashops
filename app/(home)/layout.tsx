@@ -3,6 +3,7 @@
 // import { Navbar } from "@/components/home/navbar"
 
 import { Cart } from "@/components/home/cart"
+import { Footer } from "@/components/home/footer"
 import { Navbar } from "@/components/home/navbar"
 
 const HomeLayout = ({children}:{children:React.ReactNode}) => {
@@ -12,7 +13,7 @@ const HomeLayout = ({children}:{children:React.ReactNode}) => {
             {/* <SearchInput /> */}
             {children}
             <Cart />
-            {/* <Footer /> */}
+            <Footer />
         </div>
     )
 }

@@ -165,4 +165,9 @@ import {
           href: "/account/address",
           icon: MapPin
       },
+      {
+          label: "Profile",
+          href: "/account/profile",
+          icon: UserCog
+      },
   ] as const;

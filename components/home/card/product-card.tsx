@@ -60,7 +60,7 @@ export const ProductCard = ({ product }: Props) => {
                 <p className="text-md">
                     {product.name.length > 40 ? isDesktop ? `${product.name.substring(0,25)}...` : `${product.name.substring(0, 40)}...` : product.name}
                 </p>
-                <div className="flex items-center gap-x-3">
+                <div className="flex items-center gap-x-1 md:gap-x-3">
                     <div className="flex items-center text-primary font-bold">
                         <TbCurrencyTaka className="h-5 w-5" />
                         <p className="-ml-1">
@@ -84,13 +84,13 @@ export const ProductCard = ({ product }: Props) => {
                     fafa
                 </p>
             </Link>
-            <div className="flex items-center gap-x-2">
-                <Button className="flex-1">Order Now</Button>
+            <div className="flex items-center gap-x-1 md:gap-x-2">
+                <Button className="flex-1 p-2">Order Now</Button>
                 <TooltipProvider>
                     <Tooltip delayDuration={0}>
                         <TooltipTrigger asChild>
                             <Button variant="ghost" size="icon" onClick={handleAddToCart}>
-                                <ShoppingCart />    
+                                <ShoppingCart className="w-5 h-5" />    
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent>

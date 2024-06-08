@@ -54,8 +54,8 @@ export const Account = async () => {
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem>
-                                <Link href="/order-tracking" className="flex items-center gap-x-2">
-                                    <MapPinned className="w-5 h-5" /> Order Tracking
+                                <Link href="/account/orders" className="flex items-center gap-x-2">
+                                    <MapPinned className="w-5 h-5" /> Orders
                                 </Link>
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
