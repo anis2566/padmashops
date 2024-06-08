@@ -19,6 +19,79 @@ model Brand {
   name String @unique
   imageUrl String
 
+  products Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Category {
+  id String @id @default(uuid())
+  name String
+  description String? @db.Text
+  imageUrl String
+  tags String[] @default([])
+
+  products Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Product {
+  id String @id @default(uuid())
+  name  String
+  description String @db.Text
+  featureImageUrl String
+  images  String[] @default([])
+  totalStock  Int?
+  price Int
+  discountPrice Int?
+  status  String @default("DRAFT")
+  tags String[] @default([])
+  colors String[] @default([])
+  genre String[] @default([])
+  featureTitle String?
+
+  categoryId String?
+  category  Category? @relation(fields: [categoryId], references: [id])
+
+  brandId String?
+  brand  Brand? @relation(fields: [brandId], references: [id])
+
+  stocks Stock[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Stock {
+  id String @id @default(uuid())
+  stock Int
+  size  String
+  color String?
+
+  productId String?
+  product Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Coupon {
+  id String @id @default(uuid())
+  name String
+  code String
+  imageUrl String?
+  value Int
+  startDate DateTime
+  expiryDate DateTime
+  status String
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

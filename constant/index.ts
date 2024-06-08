@@ -46,7 +46,7 @@ import {
     },
     {
       label: "Products",
-      href: "/dashboard/products",
+      href: "/dashboard/product",
       icon: Package,
     },
     {

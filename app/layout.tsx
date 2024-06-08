@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import NextTopLoader from 'nextjs-toploader';
+import {ClerkProvider,} from '@clerk/nextjs'
 
 import { Toaster } from "@/components/ui/sonner";
 
 import "./globals.css";
 import { QueryProvider } from "@/providers/query-provider";
+import { ModalProvider } from "@/providers/modal-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,13 +22,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <QueryProvider>
-          {children}
-          <Toaster />
-        </QueryProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={inter.className}>
+          <QueryProvider>
+            {children}
+            <Toaster />
+            <NextTopLoader showSpinner={false} color="#F97316" />
+            <ModalProvider />
+          </QueryProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
