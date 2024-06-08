@@ -47,20 +47,20 @@ export const Cart = () => {
             <HoverCardContent align="end" className="p-2 w-[270px] space-y-4 z-50">
                 <div className="space-y-2 w-full">
                     {
-                        cart.map((product, index) => (
+                        cart.map((item, index) => (
                             <div className="flex items-center gap-x-2 justify-between hover:bg-muted/60" key={index}>
                                 <Image
-                                    src={product.featureImageUrl}
-                                    alt={product.name}
+                                    src={item.product.featureImageUrl}
+                                    alt={item.product.name}
                                     className="aspect-object object-cover rounded-lg"
                                     height="50"
                                     width="50"
                                 />
                                 <div className="">
-                                    <p className="truncate text-sm text-slate-800">{product.name.slice(0,17)}...</p>
-                                    <p className="text-sm text-muted-foreground">{product.quantity} x &#2547;{product.price}</p>
+                                    <p className="truncate text-sm text-slate-800">{item.product.name.slice(0,17)}...</p>
+                                    <p className="text-sm text-muted-foreground">{item.quantity} x &#2547;{item.price}</p>
                                 </div>
-                                <Button size="icon" variant="ghost" onClick={() => removeFromCart(product.id)}>
+                                <Button size="icon" variant="ghost" onClick={() => removeFromCart(item.product.id)}>
                                     <Trash2 className="w-5 h-5 text-rose-500" />
                                 </Button>
                             </div>
