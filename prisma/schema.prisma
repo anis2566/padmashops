@@ -22,6 +22,9 @@ model User {
   role    String      @default("user")
   phone String?
 
+  addresses ShippingInfo[]
+  orders Order[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -66,6 +69,8 @@ model Product {
   colors String[] @default([])
   genre String[] @default([])
   featureTitle String?
+  averageRating    Float      @default(0.0)
+  ratingCount      Int        @default(0)
 
   categoryId String?
   category  Category? @relation(fields: [categoryId], references: [id])
@@ -74,6 +79,7 @@ model Product {
   brand  Brand? @relation(fields: [brandId], references: [id])
 
   stocks Stock[]
+  orderProducts OrderProduct[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -107,3 +113,62 @@ model Coupon {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+
+model ShippingInfo {
+  id String @id @default(uuid())
+  title String?
+  name String
+  division String
+  address String
+  phone String
+
+  userId String?
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  orders Order[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Order {
+  id String @id @default(uuid())
+  invoiceId String
+  total Int
+  status String @default("pending")
+  paymentMethod String
+  paymentStatus String? 
+  deliveryFee Int @default(120)
+
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  shippingInfoId String
+  shippingInfo ShippingInfo @relation(fields: [shippingInfoId], references: [id])
+
+  products OrderProduct[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OrderProduct {
+  id String @id @default(uuid())
+  quantity Int
+  size String?
+  color String?
+  price Int  
+
+  orderId String
+  order Order @relation(fields: [orderId], references: [id])
+
+  productId String
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+

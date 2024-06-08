@@ -1,6 +1,9 @@
+"use client"
+
 import { ClerkLoaded, ClerkLoading, SignOutButton, SignedOut, SignedIn, SignInButton } from "@clerk/nextjs"
 import { User, UserCog, MapPinned, Heart, LogOut, Loader2 } from "lucide-react"
 import Link from "next/link"
+import { useQuery } from "@tanstack/react-query"
 
 import {
     DropdownMenu,
@@ -11,24 +14,34 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { currentUser } from "@clerk/nextjs/server"
 
-export const Account = async () => {
-    const user = await currentUser()
+import { getUser } from "@/services/user.services"
+
+export const Account = () => {
+
+    const { data: user } = useQuery({
+        queryKey: ["get-user-profile"],
+        queryFn: async () => {
+            const user = await getUser()
+            return user
+        }
+    })
 
     return (
         <div>
-            <SignedOut>
+            {/* <SignedOut>
                 <ClerkLoading>
                     <Loader2 className="w-5 h-5 animate-spin" />
                 </ClerkLoading>
-                <ClerkLoaded>
-                    <SignInButton mode="modal">
-                        <Button variant="outline" size="icon">
-                            <User className="h-[1.2rem] w-[1.2rem] dark:text-white" />
-                        </Button>
-                    </SignInButton >
-                </ClerkLoaded>
+                <SignInButton mode="modal" forceRedirectUrl="/">
+                    <Button variant="outline" size="icon">
+                        <ClerkLoaded>
+                            <div className="w-5 h-5 dark:text-white">
+                                <User />
+                            </div>
+                        </ClerkLoaded>
+                    </Button>
+                </SignInButton>
             </SignedOut>
 
             <SignedIn >
@@ -39,8 +52,8 @@ export const Account = async () => {
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Avatar>
-                                <AvatarImage src={user?.imageUrl} />
-                                <AvatarFallback>{user?.firstName?.charAt(0)}</AvatarFallback>
+                                <AvatarImage src={user?.user.imageUrl || ""} />
+                                <AvatarFallback>{user?.user.name?.charAt(0)}</AvatarFallback>
                             </Avatar>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
@@ -66,16 +79,23 @@ export const Account = async () => {
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem className="p-0">
-                                <SignOutButton>
-                                    <Button variant="ghost" className="py-0 flex items-center gap-x-2 ">
-                                        <LogOut className="w-5 h-5" /> Logout
+                                <ClerkLoading>
+                                    <Loader2 className="w-5 h-5 animate-spin" />
+                                </ClerkLoading>
+                                <ClerkLoaded>
+                                    <Button variant="ghost" className="py-0 flex items-center gap-x-2 " asChild>
+                                        <SignOutButton redirectUrl="/">
+                                            <span className="flex items-center gap-x-2">
+                                                <LogOut className="w-5 h-5" /> Logout
+                                            </span>
+                                        </SignOutButton>
                                     </Button>
-                                </SignOutButton>
+                                </ClerkLoaded>
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </ClerkLoaded>
-            </SignedIn>
+            </SignedIn> */}
         </div>
     )
 }

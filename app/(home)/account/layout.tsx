@@ -24,7 +24,7 @@ const AccountLayout = ({children}:{children:React.ReactNode}) => {
 
             <div className="flex gap-x-3">
                 <Sidebar />
-                <div>
+                <div className="flex-1">
                     {children}
                 </div>
             </div>

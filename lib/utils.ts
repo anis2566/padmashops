@@ -21,3 +21,16 @@ export function formatPriceBDT(amount:number, decimalCount = 2, decimal = ".", t
       console.log(e);
   }
 };
+
+
+export function calculateDeliveryFee(districkt: string) {
+  if (districkt === "Dhaka") return 60;
+  else return 120;
+}
+
+
+export function generateInvoiceId() {
+  const prefix = "INV";
+  const randomNumber = Math.floor(100000 + Math.random() * 900000); // Generates a 6-digit number
+  return `${prefix}-${randomNumber}`;
+}
