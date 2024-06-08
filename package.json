@@ -62,6 +62,7 @@
     "react-quill": "^2.0.0",
     "react-resizable-panels": "^2.0.19",
     "sonner": "^1.4.41",
+    "svix": "^1.24.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "uploadthing": "^6.12.0",
