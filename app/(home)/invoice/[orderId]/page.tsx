@@ -46,9 +46,9 @@ const Invoice = async ({ params }: Props) => {
                 <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
                     <div className="flex items-start justify-between">
                         <div>
-                            <h2 className="font-semibold text-lg">{order.address?.recepient}</h2>
+                            <h2 className="font-semibold text-lg">{order.shippingInfo?.name}</h2>
                             <p className="text-sm text-gray-500 dark:text-gray-400">
-                                {order.address?.address}
+                                {order.shippingInfo?.address}
                             </p>
                         </div>
                         <div className="text-right">
