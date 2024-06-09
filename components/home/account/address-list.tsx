@@ -32,7 +32,7 @@ export const AddressList = () => {
                     {
                         isFetching ?
                             Array.from({ length: 3 }, (_, index) => (
-                                <Skeleton className="h-10 w-[120px]" />
+                                <Skeleton className="h-10 w-[120px]" key={index} />
                             )) :
                             addresses?.map(address => (
                                 <div key={address.id} className="flex items-center gap-x-1 border border-primary p-1 rounded-md text-primary">
