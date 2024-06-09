@@ -97,6 +97,7 @@ const Checkout = () => {
       router.push(`/invoice/${data.order.id}`)
       onOpen()
       form.reset()
+      resetCart()
       toast.success(data.success, {
         id: "create-order"
       });
@@ -135,6 +136,11 @@ const Checkout = () => {
                 <CardTitle>Saved Address</CardTitle>
               </CardHeader>
               <CardContent>
+                {
+                  address?.length === 0 && (
+                    <span className="italic text-muted-foreground">No saved address</span>
+                  )
+                }
                 <FormField
                   control={form.control}
                   name="shippingInfoId"

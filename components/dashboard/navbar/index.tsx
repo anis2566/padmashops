@@ -1,8 +1,10 @@
-import { Loader2, Search, } from "lucide-react"
+import { Loader2Icon, Search, } from "lucide-react"
 
 import { Input } from "@/components/ui/input"
 
 import { ModeToggle } from "@/components/mode-toggle"
+import { Notification } from "./notification"
+import { ClerkLoaded, ClerkLoading, UserButton } from "@clerk/nextjs"
 
 export const Navbar = () => {
     return (
@@ -22,13 +24,13 @@ export const Navbar = () => {
             </div>
             <div className="flex items-center gap-x-2">
                 <ModeToggle />
-                {/* <Notification /> */}
-                {/* <ClerkLoading>
-                <Loader2 className="w-5 h-5 animate-spin" />
-              </ClerkLoading>
-              <ClerkLoaded>
-                <UserButton afterSignOutUrl="/" />
-              </ClerkLoaded> */}
+                <Notification />
+                <ClerkLoading>
+                    <Loader2Icon className="w-5 h-5 animate-spin" />
+                </ClerkLoading>
+                <ClerkLoaded>
+                    <UserButton afterSignOutUrl="/" />
+                </ClerkLoaded>
             </div>
         </header>
     )

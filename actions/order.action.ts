@@ -1,17 +1,14 @@
 "use server";
 
-import { Order } from "@prisma/client";
-
 import { db } from "@/lib/db";
 import {
   OrderProductSchemaType,
   OrderSchema,
   OrderSchemaType,
 } from "@/schema/order.schema";
-// import { sendNotification } from "@/service/notification.service";
-import { revalidatePath } from "next/cache";
 import { generateInvoiceId } from "@/lib/utils";
-import { getUser } from "@/services/user.services";
+import { getAdmin, getUser } from "@/services/user.services";
+import { sendNotification } from "@/services/notification.services";
 
 type CreateOrder = {
   order: OrderSchemaType;
@@ -19,64 +16,105 @@ type CreateOrder = {
 };
 
 export const CREATE_ORDER = async ({ order, products }: CreateOrder) => {
+  const { data, success } = OrderSchema.safeParse(order);
 
-    console.log(products)
-    const { data, success } = OrderSchema.safeParse(order);
-  
-    if (!success) {
-      throw new Error("Invalid input value");
-    }
-  
-    const {
-      shippingInfoId,
-      deliveryFee,
-      paymentMethod,
+  if (!success) {
+    throw new Error("Invalid input value");
+  }
+
+  const {
+    shippingInfoId,
+    deliveryFee,
+    paymentMethod,
+    name,
+    division,
+    address,
+    phone,
+  } = data;
+
+  const { userId, clerkId, user } = await getUser();
+
+  const total = products.reduce((acc, curr) => acc + curr.price * curr.quantity, 0); // Consider quantity in total calculation
+
+  const shippingId = shippingInfoId || (await db.shippingInfo.create({
+    data: {
+      userId,
       name,
       division,
       address,
       phone,
-    } = data;
-  
-    const { userId } = await getUser();
-  
-    const total = products.reduce((acc, curr) => acc + curr.price, 0);
-  
-    let shippingId = shippingInfoId;
-  
-    if (!shippingId) {
-      const newAddress = await db.shippingInfo.create({
-        data: {
-          userId,
-          name,
-          division,
-          address,
-          phone,
+    },
+  })).id;
+
+  const newOrder = await db.order.create({
+    data: {
+      userId,
+      invoiceId: generateInvoiceId(),
+      total,
+      deliveryFee,
+      paymentMethod,
+      products: {
+        createMany: {
+          data: products.map(product => ({
+            productId: product.productId,
+            quantity: product.quantity,
+            price: product.price
+          })),
         },
-      });
-      shippingId = newAddress.id;
-    }
-  
-    const newOrder = await db.order.create({
-      data: {
-        userId,
-        invoiceId: generateInvoiceId(),
-        total,
-        deliveryFee,
-        paymentMethod,
-        products: {
-          createMany: {
-            data: products.map(product => ({ productId: product.productId, quantity: product.quantity, price: product.price })),
-          },
-        },
-        shippingInfoId: shippingId,
       },
+      shippingInfoId: shippingId,
+    },
+  });
+
+  const stockUpdates = products.map(product => {
+    if (product.size) {
+      return db.stock.updateMany({
+        where: {
+          productId: product.productId,
+          size: product.size
+        },
+        data: {
+          stock: {
+            decrement: product.quantity
+          }
+        }
+      });
+    }
+    return db.product.update({
+      where: {
+        id: product.productId
+      },
+      data: {
+        totalStock: {
+          decrement: product.quantity
+        }
+      }
     });
-  
-    return {
-      success: "Order placed",
-      order: newOrder
-    };
+  });
+
+  await Promise.all(stockUpdates);
+
+  const { adminClerkId } = await getAdmin();
+
+  await sendNotification({
+    trigger: "new-order",
+    recipients: [adminClerkId],
+    actor: {
+      id: clerkId,
+      name: user.name,
+    },
+    data: {
+      redirectUrl: `/dashboard/orders/${newOrder.id}`,
+      invoice: newOrder.invoiceId,
+    },
+  });
+
+  return {
+    success: "Order placed",
+    order: newOrder
   };
+};
+
   
 
 type UpdateOrder = {

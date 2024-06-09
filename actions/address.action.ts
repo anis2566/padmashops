@@ -42,7 +42,10 @@ export const GET_USER_ADDRESS = async () => {
 
     const addresses = await db.shippingInfo.findMany({
         where: {
-            userId
+            userId,
+            title: {
+                not: ""
+            }
         }
     })
 

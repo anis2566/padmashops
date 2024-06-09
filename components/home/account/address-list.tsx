@@ -11,7 +11,7 @@ import { GET_USER_ADDRESS } from "@/actions/address.action"
 import { useAddress } from "@/hooks/use-address"
 
 export const AddressList = () => {
-    const {onOpen} = useAddress()
+    const { onOpen } = useAddress()
 
     const { data: addresses, isFetching } = useQuery({
         queryKey: ["user-address"],
@@ -28,6 +28,11 @@ export const AddressList = () => {
                 <CardDescription>A collection of your saved address.</CardDescription>
             </CardHeader>
             <CardContent>
+                {
+                    addresses?.length === 0 && (
+                        <span className="italic text-muted-foreground">No saved address</span>
+                    )
+                }
                 <div className="flex items-center gap-x-3 flex-wrap gap-y-3">
                     {
                         isFetching ?

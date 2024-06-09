@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Link from "next/link";
 import { TbCurrencyTaka } from "react-icons/tb";
-import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -13,17 +13,19 @@ import { ProductWithFeature } from "@/@types";
 import { useCart } from "@/store/use-cart";
 
 interface Props {
-    product: ProductWithFeature
+    product: ProductWithFeature 
 }
 
 
 export const BestDealCard = ({ product }: Props) => {
     const { addToCart } = useCart()
+    
+    const router = useRouter()
 
-    const handleAddToCart = () => {
+    const handleOrder = () => {
         const price = product.discountPrice || product.price
-        addToCart({product, price, quantity:1})
-        toast.success("Added to cart")
+        addToCart({ product, price, quantity: 1 })
+        router.push("/checkout")
     }
 
     return (
@@ -59,7 +61,7 @@ export const BestDealCard = ({ product }: Props) => {
                     <span className="text-xs text-muted-foreground">Sold: 5/{product?.totalStock}</span>
                 </div>
             </Link>
-            <Button onClick={handleAddToCart}>Order Now</Button>
+            <Button onClick={handleOrder}>Order Now</Button>
         </div>
     )
 }

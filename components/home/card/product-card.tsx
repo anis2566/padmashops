@@ -18,6 +18,7 @@ import {
 
 import { ProductWithFeature } from "@/@types";
 import { useCart } from "@/store/use-cart";
+import { useRouter } from "next/navigation";
 
 interface Props {
     product: ProductWithFeature
@@ -27,6 +28,8 @@ interface Props {
 export const ProductCard = ({ product }: Props) => {
     const { addToCart } = useCart()
     const [isDesktop, setIsDesktop] = useState(false);
+
+    const router = useRouter()
 
     useEffect(() => {
         const handleResize = () => {
@@ -43,6 +46,12 @@ export const ProductCard = ({ product }: Props) => {
         const price = product.discountPrice || product.price
         addToCart({ product, price, quantity: 1 })
         toast.success("Added to cart")
+    }
+
+    const handleOrder = () => {
+        const price = product.discountPrice || product.price
+        addToCart({ product, price, quantity: 1 })
+        router.push("/checkout")
     }
 
     return (
@@ -75,7 +84,7 @@ export const ProductCard = ({ product }: Props) => {
                 </div>
             </Link>
             <div className="flex items-center gap-x-1 md:gap-x-2">
-                <Button className="flex-1 p-2">Order Now</Button>
+                <Button className="flex-1 p-2" onClick={handleOrder}>Order Now</Button>
                 <TooltipProvider>
                     <Tooltip delayDuration={0}>
                         <TooltipTrigger asChild>

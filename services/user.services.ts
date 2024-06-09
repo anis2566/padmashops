@@ -23,3 +23,23 @@ export const getUser = async () => {
 
     return {user, userId: user.id, clerkId: userId}
 }
+
+
+
+export const getAdmin = async () => {
+    const admin = await db.user.findFirst({
+        where: {
+            role: "admin"
+        }
+    })
+
+    if (!admin) {
+        throw new Error("Admin not found")
+    }
+
+    return {
+        admin,
+        adminId: admin.id,
+        adminClerkId: admin.clerkId
+    }
+}
