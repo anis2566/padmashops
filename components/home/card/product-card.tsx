@@ -10,15 +10,14 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
 } from "@/components/ui/tooltip"
 
 import { ProductWithFeature } from "@/@types";
 import { useCart } from "@/store/use-cart";
-import { cn } from "@/lib/utils";
 
 interface Props {
     product: ProductWithFeature
@@ -42,12 +41,12 @@ export const ProductCard = ({ product }: Props) => {
 
     const handleAddToCart = () => {
         const price = product.discountPrice || product.price
-        addToCart({product, price, quantity:1})
+        addToCart({ product, price, quantity: 1 })
         toast.success("Added to cart")
     }
 
     return (
-        <div className="p-2 flex flex-col justify-between space-y-1 border-2 border-gray-200 hover:border-primary relative">
+        <div className="p-2 flex flex-col justify-between min-h-[270px] md:min-h-[310px] space-y-1 border-2 border-gray-200 hover:border-primary relative">
             <Link href={`/shop/${product.id}`}>
                 <div className="aspect-square">
                     <Image
@@ -58,7 +57,7 @@ export const ProductCard = ({ product }: Props) => {
                     />
                 </div>
                 <p className="text-md">
-                    {product.name.length > 40 ? isDesktop ? `${product.name.substring(0,25)}...` : `${product.name.substring(0, 40)}...` : product.name}
+                    {product.name.length > 40 ? isDesktop ? `${product.name.substring(0, 25)}...` : `${product.name.substring(0, 40)}...` : product.name}
                 </p>
                 <div className="flex items-center gap-x-1 md:gap-x-3">
                     <div className="flex items-center text-primary font-bold">
@@ -74,15 +73,6 @@ export const ProductCard = ({ product }: Props) => {
                         </p>
                     </div>
                 </div>
-                <p 
-                    className={cn(
-                        "hidden", 
-                        product.name.length <= 24 && "block opacity-0",
-
-                    )}
-                >
-                    fafa
-                </p>
             </Link>
             <div className="flex items-center gap-x-1 md:gap-x-2">
                 <Button className="flex-1 p-2">Order Now</Button>
@@ -90,11 +80,11 @@ export const ProductCard = ({ product }: Props) => {
                     <Tooltip delayDuration={0}>
                         <TooltipTrigger asChild>
                             <Button variant="ghost" size="icon" onClick={handleAddToCart}>
-                                <ShoppingCart className="w-5 h-5" />    
+                                <ShoppingCart className="w-5 h-5" />
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent>
-                        <p>Add to Cart</p>
+                            <p>Add to Cart</p>
                         </TooltipContent>
                     </Tooltip>
                 </TooltipProvider>

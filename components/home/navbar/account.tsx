@@ -1,101 +1,76 @@
 "use client"
 
-import { ClerkLoaded, ClerkLoading, SignOutButton, SignedOut, SignedIn, SignInButton } from "@clerk/nextjs"
-import { User, UserCog, MapPinned, Heart, LogOut, Loader2 } from "lucide-react"
-import Link from "next/link"
-import { useQuery } from "@tanstack/react-query"
+import { useEffect, useState } from "react";
+import { useUser } from "@clerk/nextjs";
+import { Heart, LogOut, ShoppingCart, UserCog } from "lucide-react";
+import { SignInButton, SignedIn, SignedOut, SignOutButton } from "@clerk/clerk-react";
+import Link from "next/link";
 
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-
-import { getUser } from "@/services/user.services"
+import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const Account = () => {
+    const { user } = useUser();
+    const [isClient, setIsClient] = useState(false);
 
-    const { data: user } = useQuery({
-        queryKey: ["get-user-profile"],
-        queryFn: async () => {
-            const user = await getUser()
-            return user
-        }
-    })
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    if (!isClient) {
+        return null;
+    }
 
     return (
-        <div>
-            {/* <SignedOut>
-                <ClerkLoading>
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                </ClerkLoading>
-                <SignInButton mode="modal" forceRedirectUrl="/">
-                    <Button variant="outline" size="icon">
-                        <ClerkLoaded>
-                            <div className="w-5 h-5 dark:text-white">
-                                <User />
-                            </div>
-                        </ClerkLoaded>
-                    </Button>
-                </SignInButton>
+        <>
+            <SignedIn>
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Avatar>
+                            <AvatarImage src={user?.imageUrl} />
+                            <AvatarFallback>{user?.firstName?.charAt(0)}</AvatarFallback>
+                        </Avatar>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuItem asChild>
+                            <Link
+                                href="/account"
+                                className="flex items-center gap-x-2"
+                            >
+                                <UserCog className="w-5 h-5" /> My Account
+                            </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                            <Link href="/account/orders" className="flex items-center gap-x-2">
+                                <ShoppingCart className="w-5 h-5" /> Orders
+                            </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                            <Link href="/wishlist" className="flex items-center gap-x-2">
+                                <Heart className="w-5 h-5" /> My Wishlist
+                            </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className="p-0">
+                            <SignOutButton redirectUrl="/">
+                                <Button variant="ghost" className="py-0 flex items-center gap-x-2 ">
+                                    <LogOut className="w-5 h-5" /> Logout
+                                </Button>
+                            </SignOutButton>
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            </SignedIn>
+            <SignedOut>
+                <Button asChild>
+                    <SignInButton mode="modal" forceRedirectUrl="/">
+                        Login
+                    </SignInButton>
+                </Button>
             </SignedOut>
-
-            <SignedIn >
-                <ClerkLoading>
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                </ClerkLoading>
-                <ClerkLoaded>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Avatar>
-                                <AvatarImage src={user?.user.imageUrl || ""} />
-                                <AvatarFallback>{user?.user.name?.charAt(0)}</AvatarFallback>
-                            </Avatar>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            <DropdownMenuItem asChild>
-                                <Link
-                                    href="/account"
-                                    className="flex items-center gap-x-2"
-                                >
-                                    <UserCog className="w-5 h-5" /> My Account
-                                </Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>
-                                <Link href="/account/orders" className="flex items-center gap-x-2">
-                                    <MapPinned className="w-5 h-5" /> Orders
-                                </Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>
-                                <Link href="/wishlist" className="flex items-center gap-x-2">
-                                    <Heart className="w-5 h-5" /> My Wishlist
-                                </Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem className="p-0">
-                                <ClerkLoading>
-                                    <Loader2 className="w-5 h-5 animate-spin" />
-                                </ClerkLoading>
-                                <ClerkLoaded>
-                                    <Button variant="ghost" className="py-0 flex items-center gap-x-2 " asChild>
-                                        <SignOutButton redirectUrl="/">
-                                            <span className="flex items-center gap-x-2">
-                                                <LogOut className="w-5 h-5" /> Logout
-                                            </span>
-                                        </SignOutButton>
-                                    </Button>
-                                </ClerkLoaded>
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                </ClerkLoaded>
-            </SignedIn> */}
-        </div>
-    )
+        </>
+    );
 }

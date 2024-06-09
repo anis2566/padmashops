@@ -38,7 +38,7 @@ import { calculateDeliveryFee, cn } from "@/lib/utils";
 import { useCart } from "@/store/use-cart";
 import { OrderSchema } from "@/schema/order.schema";
 import { CREATE_ORDER } from "@/actions/order.action";
-// import { useConfettiStore } from "@/hooks/use-confetti";
+import { useConfettiStore } from "@/hooks/use-confetti";
 
 type Division = {
   id: string;
@@ -49,7 +49,7 @@ const Checkout = () => {
   const [divisions, setDivisions] = useState<Division[]>([]);
 
   const { cart, resetCart } = useCart()
-//   const {onOpen} = useConfettiStore()
+  const { onOpen } = useConfettiStore()
   const router = useRouter()
 
   const total = cart.reduce((acc, curr) => {
@@ -94,6 +94,9 @@ const Checkout = () => {
   const { mutate: createOrder, isPending } = useMutation({
     mutationFn: CREATE_ORDER,
     onSuccess: (data) => {
+      router.push(`/invoice/${data.order.id}`)
+      onOpen()
+      form.reset()
       toast.success(data.success, {
         id: "create-order"
       });
@@ -111,12 +114,12 @@ const Checkout = () => {
     })
     const orderProduct = cart.map(item => ({
       productId: item.product.id,
-      price: item.product.discountPrice || item.product.price, 
+      price: item.product.discountPrice || item.product.price,
       quantity: item.quantity,
       size: item.size,
       color: item.color
     }))
-    createOrder({order: values, products: orderProduct})
+    createOrder({ order: values, products: orderProduct })
   }
 
   return (
@@ -301,21 +304,21 @@ const Checkout = () => {
                 <div className="grid gap-4">
                   <div className="flex items-center justify-between">
                     <span>Total</span>
-                    <span>{total}</span>
+                    <span>&#2547;{total}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span>Shipping</span>
-                    <span>{form.watch("deliveryFee")}</span>
+                    <span>&#2547;{form.watch("deliveryFee")}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span>Taxes</span>
-                    <span>0</span>
+                    <span>&#2547;0</span>
                   </div>
                   <Separator />
                   <div className="flex items-center justify-between font-medium">
                     <span>Subtotal</span>
                     <span>
-                      {total + form.watch("deliveryFee")}
+                      &#2547;{total + form.watch("deliveryFee")}
                     </span>
                   </div>
                 </div>
@@ -327,12 +330,12 @@ const Checkout = () => {
                 <CardTitle>Payment Method</CardTitle>
               </CardHeader>
               <CardContent className="flex items-center gap-x-3">
-                <Card 
+                <Card
                   className={cn(
                     "w-full max-w-[170px] cursor-pointer hover:border-primary/50",
                     form.watch("paymentMethod") === "cod" && "border-primary text-primary",
                     isPending && "pointer-events-none"
-                    )} 
+                  )}
                   onClick={() => form.setValue("paymentMethod", "cod" as string)}
                 >
                   <CardContent className="p-2 flex flex-col items-center space-y-2">
@@ -345,12 +348,12 @@ const Checkout = () => {
                     </p>
                   </CardContent>
                 </Card>
-                <Card 
+                <Card
                   className={cn(
-                    "w-full max-w-[170px] cursor-pointer hover:border-primary/50", 
+                    "w-full max-w-[170px] cursor-pointer hover:border-primary/50",
                     form.watch("paymentMethod") === "mob" && "border-primary text-primary",
                     isPending && "pointer-events-none"
-                  )} 
+                  )}
                   onClick={() => form.setValue("paymentMethod", "mob" as string)}
                 >
                   <CardContent className="p-2 flex flex-col items-center space-y-2">

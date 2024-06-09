@@ -1,7 +1,3 @@
-// import { Cart } from "@/components/home/cart"
-// import { Footer } from "@/components/home/footer"
-// import { Navbar } from "@/components/home/navbar"
-
 import { Cart } from "@/components/home/cart"
 import { Footer } from "@/components/home/footer"
 import { Navbar } from "@/components/home/navbar"

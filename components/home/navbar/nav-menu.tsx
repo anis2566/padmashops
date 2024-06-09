@@ -7,7 +7,7 @@ export function NavMenu() {
     <div className="flex items-center gap-x-2">
       {/* <Wishlist /> */}
       <div className="md:hidden">
-        {/* <Cart /> */}
+        <Cart />
       </div>
       <Account />
     </div>

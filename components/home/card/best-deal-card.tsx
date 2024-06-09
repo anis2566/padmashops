@@ -59,7 +59,7 @@ export const BestDealCard = ({ product }: Props) => {
                     <span className="text-xs text-muted-foreground">Sold: 5/{product?.totalStock}</span>
                 </div>
             </Link>
-            <Button onClick={handleAddToCart}>Add to Cart</Button>
+            <Button onClick={handleAddToCart}>Order Now</Button>
         </div>
     )
 }

@@ -1,8 +1,11 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent, clerkClient } from '@clerk/nextjs/server'
+import { Knock } from "@knocklabs/node"
 
 import {db} from "@/lib/db"
+
+const knock = new Knock(process.env.NEXT_PUBLIC_KNOCK_API_KEY)
  
 export async function POST(req: Request) {
  
@@ -71,6 +74,12 @@ export async function POST(req: Request) {
         role: user.role,
       },
     });
+
+    await knock.users.identify(evt.data.id, {
+      name: user.name,
+      avatar: user.imageUrl,
+    })
+
   }
 
   if (eventType === "user.updated") {
@@ -89,11 +98,14 @@ export async function POST(req: Request) {
   }
 
   if (eventType === "user.deleted") {
+    await knock.users.delete(evt.data.id || "");
+
     await db.user.delete({
       where: {
         clerkId: evt.data.id,
       },
     });
+
   }
 
   return new Response('', { status: 200 })
