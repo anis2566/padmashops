@@ -7,7 +7,7 @@ import { Trash2 } from "lucide-react"
 import Image from "next/image"
 import { toast } from "sonner"
 import { useMutation } from "@tanstack/react-query"
-import {Category} from "@prisma/client"
+import { Category } from "@prisma/client"
 import { UploadDropzone } from "@/lib/uploadthing"
 
 import { Button } from "@/components/ui/button"
@@ -23,11 +23,11 @@ interface EditCategoryProps {
     category: Category
 }
 
-export const EditCategoryForm = ({category}:EditCategoryProps) => {
+export const EditCategoryForm = ({ category }: EditCategoryProps) => {
 
     const form = useForm<z.infer<typeof CategorySchema>>({
-            resolver: zodResolver(CategorySchema),
-            defaultValues: {
+        resolver: zodResolver(CategorySchema),
+        defaultValues: {
             name: category.name || "",
             description: category.description || "",
             imageUrl: category.imageUrl || "",
@@ -35,7 +35,7 @@ export const EditCategoryForm = ({category}:EditCategoryProps) => {
         },
     })
 
-    const {mutate: updateCategory, isPending} = useMutation({
+    const { mutate: updateCategory, isPending } = useMutation({
         mutationFn: EDIT_CATEGORY,
         onSuccess: (data) => {
             toast.success(data.success, {
@@ -47,13 +47,13 @@ export const EditCategoryForm = ({category}:EditCategoryProps) => {
                 id: "update-category"
             });
         }
-    }) 
+    })
 
     const onSubmit = async (values: z.infer<typeof CategorySchema>) => {
         toast.loading("Category updating...", {
             id: "update-category"
         })
-        updateCategory({categoryId: category.id, values})
+        updateCategory({ categoryId: category.id, values })
     }
 
     return (
@@ -108,43 +108,43 @@ export const EditCategoryForm = ({category}:EditCategoryProps) => {
                             </CardHeader>
                             <CardContent>
                                 <FormField
-                                        control={form.control}
-                                        name="imageUrl"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormControl>
-                                                    {
-                                                        form.getValues("imageUrl") ? (
-                                                            <div className="relative mt-2">
-                                                                <Image
+                                    control={form.control}
+                                    name="imageUrl"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormControl>
+                                                {
+                                                    form.getValues("imageUrl") ? (
+                                                        <div className="relative mt-2">
+                                                            <Image
                                                                 alt="Upload"
                                                                 width={120}
                                                                 height={120}
                                                                 className="object-contain rounded-md mx-auto"
                                                                 src={form.getValues("imageUrl")}
-                                                                />
-                                                                <Button type="button" className="absolute top-0 right-0" variant="ghost" size="icon" onClick={() => form.setValue("imageUrl", "")} disabled={isPending}>
-                                                                    <Trash2 className="text-rose-500" />
-                                                                </Button>
-                                                            </div>
-                                                        ) : (
-                                                            <UploadDropzone
-                                                                endpoint="imageUploader"
-                                                                onClientUploadComplete={(res) => {
-                                                                    field.onChange(res[0].url)
-                                                                    toast.success("Image uploaded")
-                                                                }}
-                                                                onUploadError={(error: Error) => {
-                                                                    toast.error("Image upload failed")
-                                                                }}
-                                                            />                                           
-                                                        )
-                                                    }
+                                                            />
+                                                            <Button type="button" className="absolute top-0 right-0" variant="ghost" size="icon" onClick={() => form.setValue("imageUrl", "")} disabled={isPending}>
+                                                                <Trash2 className="text-rose-500" />
+                                                            </Button>
+                                                        </div>
+                                                    ) : (
+                                                        <UploadDropzone
+                                                            endpoint="imageUploader"
+                                                            onClientUploadComplete={(res) => {
+                                                                field.onChange(res[0].url)
+                                                                toast.success("Image uploaded")
+                                                            }}
+                                                            onUploadError={(error: Error) => {
+                                                                toast.error("Image upload failed")
+                                                            }}
+                                                        />
+                                                    )
+                                                }
                                             </FormControl>
                                             <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />                                
+                                        </FormItem>
+                                    )}
+                                />
                             </CardContent>
                         </Card>
                     </div>
@@ -164,8 +164,8 @@ export const EditCategoryForm = ({category}:EditCategoryProps) => {
                                             <FormControl>
                                                 <Input placeholder="Enter tags" {...field}
                                                     onChange={(e) => {
-                                                    const tagsArray = e.target.value.split(",").map(tag => tag.trim());
-                                                    field.onChange(tagsArray);
+                                                        const tagsArray = e.target.value.split(",").map(tag => tag.trim());
+                                                        field.onChange(tagsArray);
                                                     }}
                                                     disabled={isPending}
                                                 />

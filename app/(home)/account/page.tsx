@@ -28,7 +28,7 @@ const Account = async () => {
     })
 
     return (
-        <main className="flex flex-1 flex-col gap-4 md:gap-8 px-4">
+        <main className="flex flex-1 flex-col gap-4 md:gap-8">
             <div className="grid gap-4 md:grid-cols-3">
                 <BigCard title="Today Orders" icon={ShoppingCart} value={530} />
                 <BigCard title="Pending Orders" icon={ShoppingCart} value={1560} />

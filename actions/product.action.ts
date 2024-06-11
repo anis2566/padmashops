@@ -116,6 +116,26 @@ export const DELETE_PRODUCT = async (productId: string) => {
 };
 
 
+export const GET_PRODUCT = async (id: string) => {
+  const product = await db.product.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      brand: true,
+      stocks: true,
+      category: true,
+    },
+  });
+
+  if (!product) redirect("/");
+
+  return {
+    product,
+  };
+};
+
+
 export const GET_POPULAR_PRODUCTS = async () => {
   const products = await db.product.findMany({
     include: {

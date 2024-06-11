@@ -34,3 +34,12 @@ export function generateInvoiceId() {
   const randomNumber = Math.floor(100000 + Math.random() * 900000); // Generates a 6-digit number
   return `${prefix}-${randomNumber}`;
 }
+
+export function calculateDiscountPercentage(
+  price: number,
+  discountPrice: number
+): number {
+  const discount = price - discountPrice;
+  const discountPercentage = Math.floor((discount / price) * 100);
+  return discountPercentage;
+}
