@@ -9,7 +9,7 @@ const Contact = () => {
                 <div className="space-y-10">
                     <div className="space-y-1">
                         <h1 className="text-3xl tracking-widest font-semibold text-center">Get in Touch with Us</h1>
-                        <p className="text-muted-foreground max-w-[300px] leading-6 text-center mx-auto">We're here to help! Reach out with any questions, feedback, or inquiries.</p>
+                        <p className="text-muted-foreground max-w-[300px] leading-6 text-center mx-auto">We are here to help! Reach out with any questions, feedback, or inquiries.</p>
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-6">
