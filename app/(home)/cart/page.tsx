@@ -3,12 +3,11 @@
 import {useEffect, useState} from "react"
 import { MinusIcon, PlusIcon, TrashIcon, Truck } from "lucide-react"
 import Image from "next/image"
-import { SignedIn, SignedOut, SignInButton  } from "@clerk/nextjs"
 import Link from "next/link"
+import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
 import {
   Select,
   SelectContent,
@@ -17,9 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-import { cn } from "@/lib/utils"
 import { useCart } from "@/store/use-cart"
-import { toast } from "sonner"
 
 const Cart = () => {
     const [isClient, setIsClient] = useState(false);
@@ -76,10 +73,10 @@ const Cart = () => {
                                                 <div className="space-y-2">
                                                     <h3 className="font-semibold text-base">{item.product.name}</h3>
                                                     <div className="flex items-center gap-2 text-sm">
-                                                        <div className="font-medium capitalize">Color: {item.color || item.product.stocks?.[0]?.size}</div>
+                                                        <div className="font-medium capitalize">Size: {item.size || item.product.stocks?.[0]?.size}</div>
                                                     </div>
                                                     <div className="flex items-center gap-2 text-sm">
-                                                        <div className="font-medium">Size: <span className="font-medium uppercase">{item.size || item.product.colors[0]}</span></div>
+                                                        <div className="font-medium">Color: <span className="font-medium uppercase">{item.color || item.product.colors[0]}</span></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -206,20 +203,11 @@ const Cart = () => {
                                     <span className="text-base font-semibold">&#2547;{total}</span>
                                 </div>
                             </div>
-                            <SignedIn>
-                                <Link href="/checkout">
-                                    <Button className="w-full md:w-auto" size="lg" disabled={cart.length < 1}>
-                                        Proceed to Checkout
-                                    </Button>
-                                </Link>
-                            </SignedIn>
-                            <SignedOut>
-                                <SignInButton mode="modal" forceRedirectUrl="/cart">
-                                    <Button className="w-full md:w-auto" size="lg">
-                                        Login to Checkout
-                                    </Button>
-                                </SignInButton>
-                            </SignedOut>
+                            <Link href="/checkout">
+                                <Button className="w-full md:w-auto" size="lg" disabled={cart.length < 1}>
+                                    Proceed to Checkout
+                                </Button>
+                            </Link>
                         </CardFooter>
                     </Card>
                 </div>

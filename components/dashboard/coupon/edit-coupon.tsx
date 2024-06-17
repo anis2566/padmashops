@@ -287,7 +287,7 @@ export const EditCouponForm = ({coupon}:EditCouponProps) => {
                                             </FormControl>
                                                 <SelectContent>
                                                     {
-                                                        ["INACTIVE", "ACTIVE"].map((item, index) => (
+                                                        ["inactive", "active"].map((item, index) => (
                                                             <SelectItem value={item} key={index}>{item}</SelectItem>
                                                         ))
                                                     }

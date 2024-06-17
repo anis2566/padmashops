@@ -1,24 +1,40 @@
 import { Menu } from "lucide-react"
+import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs"
 
 import { Button } from "@/components/ui/button"
 
 import { Logo } from "@/components/logo"
 import { Search } from "./search"
-import { NavMenu } from "./nav-menu"
-// import { NavDrawer } from "./drawer"
+import { NavDrawer } from "./nav-drawer"
+import { Notification } from "./notification"
+import { Account } from "./account"
+import { Wishlist } from "./wishlist"
+import { Cart } from "./cart"
 
 export const Navbar = () => {
     return (
         <div className="w-full bg-white border-b-1 border-gray-200 py-3 sticky inset-0 z-50">
             <div className="w-full max-w-screen-xl mx-auto flex items-center justify-between gap-x-3 px-4">
-                {/* <NavDrawer>
+                <NavDrawer>
                     <Button variant="ghost" size="icon" className="sm:hidden">
                         <Menu className="w-5 h-5" />
                     </Button>
-                </NavDrawer> */}
+                </NavDrawer>
                 <Logo callbackUrl="/" />
                 <Search />
-                <NavMenu />
+                <SignedIn>
+                    <div className="flex items-center">
+                        <Notification />
+                        <Wishlist />
+                        <Cart />
+                        <Account />
+                    </div>
+                </SignedIn>
+                <SignedOut>
+                    <Button asChild size="sm" className="p-2">
+                        <SignInButton forceRedirectUrl="/" mode="modal">Login</SignInButton>
+                    </Button>
+                </SignedOut>
             </div>
         </div>
     )

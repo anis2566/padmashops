@@ -15,6 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { calculateDiscountPercentage } from "@/lib/utils"
 import { ProductWithFeature } from "@/@types"
 import { useCart } from "@/store/use-cart"
+import { useWishlist } from "@/store/use-wishlist"
 
 interface Props {
     product: ProductWithFeature
@@ -26,6 +27,7 @@ export const ProductInfo = ({ product }: Props) => {
     const [size, setSize] = useState<string>("")
 
     const { addToCart } = useCart()
+    const {addToWishlist} = useWishlist()
 
 
     const increamentQuantity = () => {
@@ -41,12 +43,17 @@ export const ProductInfo = ({ product }: Props) => {
     }
 
     const handleAddToCart = () => {
-        addToCart({ product, price: product.discountPrice || product.price, quantity, size, color })
+        addToCart({ product, price: product.discountPrice || product.price, quantity, color, size })
         toast.success("Added to cart")
     }
 
+    const handleAddToWishlist = () => {
+        addToWishlist(product)
+        toast.success("Added to wishlist")
+    }
+
     return (
-        <div className="space-y-3">
+        <div className="space-y-3 px-2">
             {
                 product.brand && (
                     <div className="flex items-center gap-x-2">
@@ -62,7 +69,7 @@ export const ProductInfo = ({ product }: Props) => {
                 )
             }
             <div className="space-y-1">
-                <h1 className="text-2xl font-bold text-slate-700">{product.name}</h1>
+                <h1 className="text-xl md:text-2xl font-bold text-slate-700">{product.name}</h1>
                 <div className="flex items-center gap-x-4">
                     <div className="flex items-center gap-0.5">
                         <StarIcon className="w-4 h-4 fill-amber-500 text-amber-500" />
@@ -148,7 +155,7 @@ export const ProductInfo = ({ product }: Props) => {
 
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
                 <Button size="lg" onClick={handleAddToCart}>Add to cart</Button>
-                <Button size="lg" variant="outline">
+                <Button size="lg" variant="outline" onClick={handleAddToWishlist}>
                     <HeartIcon className="w-4 h-4 mr-2" />
                     Add to wishlist
                 </Button>
@@ -160,7 +167,7 @@ export const ProductInfo = ({ product }: Props) => {
 
 export const ProductInfoSkeleton = () => {
     return (
-        <div className="space-y-3">
+        <div className="space-y-3 px-2">
             <div className="flex items-center gap-x-2">
                 <Skeleton className="w-20 h-6" />
             </div>

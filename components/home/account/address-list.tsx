@@ -18,13 +18,15 @@ export const AddressList = () => {
         queryFn: async () => {
             const res = await GET_USER_ADDRESS()
             return res.addresses
-        }
+        },
+        staleTime: 60 * 60 * 1000,
+        refetchOnWindowFocus: false
     })
 
     return (
         <Card>
             <CardHeader>
-                <CardTitle className="text-primary">Saved Address</CardTitle>
+                <CardTitle>Saved Address</CardTitle>
                 <CardDescription>A collection of your saved address.</CardDescription>
             </CardHeader>
             <CardContent>

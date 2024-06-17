@@ -57,8 +57,8 @@ export const BestDealCard = ({ product }: Props) => {
                     </div>
                 </div>
                 <div className="space-y-1">
-                    <Progress value={(5 / (product.totalStock || 1)) * 100} className="h-1.5" />
-                    <span className="text-xs text-muted-foreground">Sold: 5/{product?.totalStock}</span>
+                    <Progress value={(product.totalSell / (product.totalStock || 1)) * 100} className="h-1.5" />
+                    <span className="text-xs text-muted-foreground">Sold: {product.totalSell}/{product?.totalStock}</span>
                 </div>
             </Link>
             <Button onClick={handleOrder}>Order Now</Button>

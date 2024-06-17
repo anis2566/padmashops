@@ -75,12 +75,12 @@ export const CREATE_REVIEW = async (values: ReviewSchemaType) => {
 
 type GetReviews = {
     productId: string;
-    page: string;
+    page: number;
 }
 
 export const GET_REVIEWS = async ({productId, page}: GetReviews) => {
-    const itemsPerPage = 2;  
-    const currentPage = parseInt(page) || 1;
+    const itemsPerPage = 3;  
+    const currentPage = page
 
     const reviews = await db.review.findMany({
         where: {

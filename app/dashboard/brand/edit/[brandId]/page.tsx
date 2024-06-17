@@ -23,7 +23,7 @@ const EditBrand = async ({params}:{params:{brandId:string}}) => {
     if(!brand) redirect("/")
 
     return (
-        <div className="w-full space-y-4 max-w-3xl">
+        <div className="w-full space-y-4 px-2">
             <Breadcrumb>
                 <BreadcrumbList>
                     <BreadcrumbItem>

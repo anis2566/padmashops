@@ -50,8 +50,8 @@ export const ProductCard = ({ product }: Props) => {
 
     const handleOrder = () => {
         const price = product.discountPrice || product.price
-        addToCart({ product, price, quantity: 1 })
-        router.push("/checkout")
+        addToCart({ product, price, quantity: 1, })
+        router.push("/cart")
     }
 
     return (
@@ -63,6 +63,7 @@ export const ProductCard = ({ product }: Props) => {
                         alt={product.name}
                         width="200"
                         height="200"
+                        className="mx-auto"
                     />
                 </div>
                 <p className="text-md">

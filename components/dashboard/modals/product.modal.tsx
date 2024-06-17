@@ -25,19 +25,19 @@ export const DeleteProductModal = () => {
         onSuccess: (data) => {
             onClose()
             toast.success(data?.success, {
-                id: "delete-brand"
+                id: "delete-product"
             });
         },
         onError: (error) => {
             toast.error(error.message, {
-                id: "delete-brand"
+                id: "delete-product"
             });
         }
     })
 
     const handleDelete = () => {
-        toast.loading("Brand deleting...", {
-            id: "delete-brand"
+        toast.loading("Product deleting...", {
+            id: "delete-product"
         })
         deleteBrand(productId)
     }

@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+
 import { Header } from "@/components/dashboard/brand/header"
 import { db } from "@/lib/db"
 import { BrandList } from "@/components/dashboard/brand"
@@ -39,9 +40,15 @@ const Brand = async ({ searchParams }: Props) => {
                 }
             })
         },
+        include: {
+            products: {
+                select: {
+                    id: true
+                }
+            }
+        },
         orderBy: {
-            ...(sort === 'asc' && { name: 'asc' }),
-            ...(sort === 'desc' && { name: 'desc' }),
+            createdAt: sort === "asc" ? "asc" : "desc"
         },
         skip: (currentPage - 1) * itemsPerPage,
         take: itemsPerPage,
@@ -57,11 +64,11 @@ const Brand = async ({ searchParams }: Props) => {
         }
     }) 
 
-    const totalPage = Math.ceil(totalBrands / itemsPerPage)
+    const totalPage = Math.round(totalBrands / itemsPerPage)
 
     
     return (
-        <div className="w-full space-y-4">
+        <div className="w-full space-y-4 px-2">
             <div className="flex items-center gap-4">
                 <Breadcrumb>
                     <BreadcrumbList>

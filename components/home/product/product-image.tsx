@@ -28,8 +28,8 @@ export const ProductImages = ({images, featureImage}:ProductImagesProps) => {
     },[featureImage])
 
     return (
-        <div className="w-full">
-            <div className="border border-gray-400 w-full max-w-[350px] mx-auto rounded-md flex items-center justify-center p-2">
+        <div className="w-full px-2">
+            <div className="shadow-md shadow-primary/40 w-full max-w-[350px] mx-auto rounded-md flex items-center justify-center p-2">
                 {activeImage === "" ? (
                     <Loader className="h-8 w-8 animate-spin" />
                 ) : (
@@ -53,7 +53,7 @@ export const ProductImages = ({images, featureImage}:ProductImagesProps) => {
                                         <div className={cn("border border-gray-300 rounded-md aspect-square flex items-center justify-center", active && "border-gray-400 opacity-70")} onClick={() => setActiveImage(image)}>
                                             <Image
                                                 alt="Product"
-                                                className="rounded-lg w-[50px] h-[50px]"
+                                                className="rounded-lg w-[100px] h-auto md:w-[50px] md:h-[50px] object-cover"
                                                 height="70"
                                                 src={image}
                                                 width="70"
@@ -75,8 +75,8 @@ export const ProductImages = ({images, featureImage}:ProductImagesProps) => {
 
 export const ProductImagesSkeleton = () => {
     return (
-        <div className="w-full">
-            <div className="border border-gray-400 w-full max-w-[350px] mx-auto rounded-md flex items-center justify-center p-2">
+        <div className="w-full px-2">
+            <div className="shadow-md shadow-primary/40 w-full max-w-[350px] mx-auto rounded-md flex items-center justify-center p-2">
                 <Skeleton className="h-[300px] w-[300px] rounded-lg" />
             </div>
             <div className="w-full px-2 mt-3">

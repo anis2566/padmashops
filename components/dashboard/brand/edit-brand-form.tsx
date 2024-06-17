@@ -83,7 +83,7 @@ export const EditBrandForm = ({ brand }: EditBrandProps) => {
                         <CardTitle>Media </CardTitle>
                         <CardDescription>Provide coupon image</CardDescription>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="px-0">
                         <FormField
                             control={form.control}
                             name="imageUrl"

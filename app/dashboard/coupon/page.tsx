@@ -38,7 +38,7 @@ const Coupon = async ({ searchParams }: Props) => {
                     contains: search, mode: "insensitive"
                 }
             }),
-            ...(status !== "ALL" && {
+            ...(status !== "all" && {
                 status: {
                     equals: status
                 }
@@ -58,7 +58,7 @@ const Coupon = async ({ searchParams }: Props) => {
                     contains: search, mode: "insensitive"
                 }
             }),
-            ...(status && {
+            ...(status !== "all" && {
                 status: {
                     equals: status
                 }
@@ -66,7 +66,7 @@ const Coupon = async ({ searchParams }: Props) => {
         }
     });
 
-    const totalPage = Math.ceil(totalCoupons / itemsPerPage);
+    const totalPage = Math.round(totalCoupons / itemsPerPage);
 
     return (
         <div className="w-full space-y-4">
@@ -90,7 +90,7 @@ const Coupon = async ({ searchParams }: Props) => {
                 </Link>
             </div>
 
-            <Card>
+            <Card className="w-[350px] sm:w-full mx-auto">
                 <CardHeader>
                     <CardTitle>Coupon List</CardTitle>
                     <CardDescription>A collection of your coupon.</CardDescription>

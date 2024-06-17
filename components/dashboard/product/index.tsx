@@ -46,30 +46,30 @@ export const ProductList = ({ products}: Props) => {
                     <Table>
                         <TableHeader>
                             <TableRow>
-                            <TableHead className="">Image</TableHead>
-                            <TableHead className="">Name</TableHead>
-                            <TableHead className="">Price</TableHead>
-                            <TableHead className="">D. Price</TableHead>
-                            <TableHead className="">Stock</TableHead>
-                            <TableHead className="">Status</TableHead>
-                            <TableHead className="">Action</TableHead>
+                            <TableHead className="px-1">Image</TableHead>
+                            <TableHead className="px-1">Name</TableHead>
+                            <TableHead className="px-1">Price</TableHead>
+                            <TableHead className="px-1">D. Price</TableHead>
+                            <TableHead className="px-1">Stock</TableHead>
+                            <TableHead className="px-1">Status</TableHead>
+                            <TableHead className="px-1">Action</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {
                                 products.map(product => (
                                 <TableRow key={product.id}>
-                                    <TableCell className="py-2">
+                                    <TableCell className="px-1 py-2">
                                         <Avatar className="w-9 h-9">
                                             <AvatarImage src={product.featureImageUrl} />
                                             <AvatarFallback>{product.name.slice(0, 30)}</AvatarFallback>
                                         </Avatar>
                                     </TableCell>
-                                    <TableCell className="py-2">{product.name.slice(0,30)}</TableCell>
-                                    <TableCell className="py-2">{product.price}</TableCell>
-                                    <TableCell className="py-2">{product.discountPrice}</TableCell>
-                                    <TableCell className="py-2">{product.totalStock}</TableCell>
-                                    <TableCell className="py-2">
+                                    <TableCell className="px-1 py-2">{product.name.slice(0,30)}</TableCell>
+                                    <TableCell className="px-1 py-2">{product.price}</TableCell>
+                                    <TableCell className="px-1 py-2">{product.discountPrice || "-"}</TableCell>
+                                    <TableCell className="px-1 py-2">{product.totalStock}</TableCell>
+                                    <TableCell className="px-1 py-2">
                                         <Badge
                                             className={cn(
                                                 "text-white bg-green-500",
@@ -79,7 +79,7 @@ export const ProductList = ({ products}: Props) => {
                                             {product.status}
                                         </Badge>    
                                     </TableCell>
-                                    <TableCell className="py-2">
+                                    <TableCell className="px-1 py-2">
                                         <DropdownMenu>
                                             <DropdownMenuTrigger asChild>
                                             <Button variant="ghost" className="h-8 w-8 p-0">

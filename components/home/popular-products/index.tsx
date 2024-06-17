@@ -1,4 +1,5 @@
 import { Popcorn } from "lucide-react"
+import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
 
@@ -13,7 +14,11 @@ export const PopularProducts = () => {
           <Popcorn className="w-7 h-7 text-primary" />
           <h1 className="text-xl font-semibold text-slate-700">Popular Products</h1>
         </div>
-        <Button className="rounded-full">See All</Button>
+        <Button className="rounded-full" asChild>
+          <Link href={`/shop?tag=popular`}>
+            See All
+          </Link>
+        </Button>
       </div>
       <Slider />
     </div>

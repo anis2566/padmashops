@@ -2,12 +2,14 @@ import '@smastrom/react-rating/style.css'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ReviewForm } from "./review-form"
 import { ReviewList } from "./review-list"
+import { Product } from '@prisma/client';
 
 interface ReviewProps {
+    product: Product;
     productId: string;
 }
 
-export const Reviews = ({productId}:ReviewProps) => {
+export const Reviews = ({product, productId}:ReviewProps) => {
 
     return (
         <Card>
@@ -16,7 +18,7 @@ export const Reviews = ({productId}:ReviewProps) => {
             </CardHeader>
             <CardContent className="space-y-5">
                 <ReviewForm productId={productId} />
-                <ReviewList productId={productId} />
+                <ReviewList product={product} productId={productId} />
             </CardContent>
         </Card>
     )

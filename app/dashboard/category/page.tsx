@@ -9,9 +9,9 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-// import { CategoryList } from "@/components/dashboard/category/category-list"
-import { db } from "@/lib/db"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+
+import { db } from "@/lib/db"
 import { Header } from "@/components/dashboard/category/header"
 import { CategoryList } from "@/components/dashboard/category"
 import { CustomPagination } from "@/components/custom-pagination"
@@ -39,9 +39,15 @@ const Category = async ({ searchParams }: Props) => {
                 }
             })
         },
+        include: {
+            products: {
+                select: {
+                    id: true
+                }
+            }
+        },
         orderBy: {
-            ...(sort === 'asc' && { name: 'asc' }),
-            ...(sort === 'desc' && { name: 'desc' }),
+            createdAt: sort === "asc" ? "asc" : "desc"
         },
         skip: (currentPage - 1) * itemsPerPage,
         take: itemsPerPage,
@@ -57,7 +63,7 @@ const Category = async ({ searchParams }: Props) => {
         }
     }) 
 
-    const totalPage = Math.ceil(totalCategory / itemsPerPage)
+    const totalPage = Math.round(totalCategory / itemsPerPage)
 
     return (
         <div className="w-full space-y-4">

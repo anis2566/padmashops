@@ -101,6 +101,13 @@ export const DELETE_CATEGORY = async (categoryId: string) => {
 
 export const GET_CATEGORIES = async () => {
   const categories = await db.category.findMany({
+    include: {
+      products: {
+        select: {
+          id: true
+        }
+      }
+    },
     orderBy: {
       createdAt: "desc",
     },

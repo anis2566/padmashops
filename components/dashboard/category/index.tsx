@@ -24,8 +24,14 @@ import {
 import { Empty } from "@/components/empty"
 import { useCategory } from "@/hooks/use-category"
 
+interface CategoryWithProduct extends Category {
+    products: {
+        id: string;
+    }[]
+}
+
 interface Props {
-    categories: Category[];
+    categories: CategoryWithProduct[];
 }
 
 export const CategoryList = ({ categories }: Props) => {
@@ -40,25 +46,25 @@ export const CategoryList = ({ categories }: Props) => {
                     <Table>
                         <TableHeader>
                             <TableRow>
-                            <TableHead className="">Image</TableHead>
-                            <TableHead className="">Name</TableHead>
-                            <TableHead className="">Products</TableHead>
-                            <TableHead className="">Action</TableHead>
+                            <TableHead className="px-1">Image</TableHead>
+                            <TableHead className="px-1">Name</TableHead>
+                            <TableHead className="px-1">Products</TableHead>
+                            <TableHead className="px-1">Action</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {
                                 categories.map(category => (
                                 <TableRow key={category.id}>
-                                    <TableCell className="py-2">
+                                    <TableCell className="px-1 py-2">
                                         <Avatar className="w-9 h-9">
                                             <AvatarImage src={category.imageUrl} />
                                             <AvatarFallback>{category.name}</AvatarFallback>
                                         </Avatar>
                                     </TableCell>
-                                    <TableCell className="py-2">{category.name}</TableCell>
-                                    <TableCell className="py-2">10</TableCell>
-                                    <TableCell className="py-2">
+                                    <TableCell className="px-1 py-2">{category.name}</TableCell>
+                                <TableCell className="px-1 py-2">{category.products.length}</TableCell>
+                                    <TableCell className="px-1 py-2">
                                         <DropdownMenu>
                                             <DropdownMenuTrigger asChild>
                                             <Button variant="ghost" className="h-8 w-8 p-0">
@@ -68,9 +74,9 @@ export const CategoryList = ({ categories }: Props) => {
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent align="end">
                                                 <DropdownMenuItem asChild>
-                                                    <Link href={`/dashboard/brand/products/${category.id}`} className="flex items-center gap-x-3">
+                                                    <Link href={`/dashboard/category/${category.id}`} className="flex items-center gap-x-3">
                                                         <Eye className="w-4 h-4" />
-                                                        View Product
+                                                        View Products
                                                     </Link>
                                                 </DropdownMenuItem>
                                                 <DropdownMenuItem asChild>

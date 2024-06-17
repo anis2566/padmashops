@@ -16,7 +16,7 @@ export const Header = () => {
     const pathname = usePathname()
     const router = useRouter()
     const searchParams = useSearchParams()
-    const searchValue = useDebounce(search, 1000)
+    const searchValue = useDebounce(search, 500)
 
     useEffect(() => {
         const url = queryString.stringifyUrl({
@@ -86,9 +86,9 @@ export const Header = () => {
                         <SelectValue placeholder="Status" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="ALL">All</SelectItem>
-                        <SelectItem value="ACTIVE">Active</SelectItem>
-                        <SelectItem value="INACTIVE">Inactive</SelectItem>
+                        <SelectItem value="all">All</SelectItem>
+                        <SelectItem value="active">Active</SelectItem>
+                        <SelectItem value="inactive">Inactive</SelectItem>
                     </SelectContent>
                 </Select>
             </div>

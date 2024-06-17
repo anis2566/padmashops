@@ -61,7 +61,7 @@ const CreateBrand = () => {
     }
 
     return (
-        <div className="w-full space-y-8 max-w-3xl">
+        <div className="w-full space-y-8 px-2">
             <Breadcrumb>
                 <BreadcrumbList>
                     <BreadcrumbItem>
@@ -107,7 +107,7 @@ const CreateBrand = () => {
                             <CardTitle>Media </CardTitle>
                             <CardDescription>Provide brand image</CardDescription>
                         </CardHeader>
-                        <CardContent>
+                        <CardContent className="px-0">
                             <FormField
                                 control={form.control}
                                 name="imageUrl"

@@ -1,11 +1,13 @@
 "use client"
 
-import { UpdateProfileform } from "@/components/home/account/update-profile-form";
-import { Card, CardContent } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton";
-import { getUser } from "@/services/user.services";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image"
+
+import { Card, CardContent } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton";
+
+import { getUser } from "@/services/user.services";
+import { UpdateProfileform } from "@/components/home/account/update-profile-form";
 
 const Profile = () => {
     const { data: user, isLoading } = useQuery({
@@ -14,11 +16,12 @@ const Profile = () => {
             const res = await getUser();
             return res.user;
         },
-        staleTime: 60 * 60 * 1000
+        staleTime: 60 * 60 * 1000,
+        refetchOnWindowFocus: false
     });
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-4 px-2">
             {
                 isLoading ? (
                     <ProfileSkeleton />

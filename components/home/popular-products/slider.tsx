@@ -12,16 +12,17 @@ import {
 } from "@/components/ui/carousel"
 
 import { ProductCard, ProductCartSkeleton } from "../card/product-card";
-import { GET_POPULAR_PRODUCTS } from "@/actions/product.action";
+import { GET_POPULAR_PRODUCTS_CLIENT } from "@/actions/product.action";
 
 export const Slider = () => {
     const { data: products, isFetching } = useQuery({
-        queryKey: ["get-popular"],
+        queryKey: ["popular-products-client"],
         queryFn: async () => {
-            const { products } = await GET_POPULAR_PRODUCTS();
+            const { products } = await GET_POPULAR_PRODUCTS_CLIENT();
             return products;
         },
-        staleTime: 60 * 60 * 1000
+        staleTime: 60 * 60 * 1000,
+        refetchOnWindowFocus: false
     })
 
 

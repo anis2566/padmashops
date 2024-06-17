@@ -1,22 +1,25 @@
 "use client"
 
-import { Progress } from "@/components/ui/progress"
 import { useQuery } from "@tanstack/react-query"
+
+import { Progress } from "@/components/ui/progress"
+
 import { SmallCard, SmallCardSkeleton } from "@/components/home/card/small-card"
 import { GET_RECENTLY_ADDED_PRODUCTS } from "@/actions/product.action"
 
 export const RecentlyAdded = () => {
     const { data: products, isFetching } = useQuery({
-        queryKey: ["get-top-selling"],
+        queryKey: ["get-recently-added"],
         queryFn: async () => {
             const res = await GET_RECENTLY_ADDED_PRODUCTS()
             return res.products
         },
-        staleTime: 60 * 60 * 1000
+        staleTime: 60 * 60 * 1000,
+        refetchOnWindowFocus: false
     })
 
     return (
-        <div className="space-y-3 mt-10 md:mt-0">
+        <div className="space-y-3 mt-4 md:mt-0">
             <p className="text-2xl font-semibold text-slate-700">Recently Added</p>
             <Progress value={0} className="w-[100px] h-1 bg-muted-foreground" />
             <div className="space-y-4">

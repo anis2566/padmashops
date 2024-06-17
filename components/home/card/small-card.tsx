@@ -2,6 +2,8 @@ import { Product } from "@prisma/client"
 import { StarIcon } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { Rating } from '@smastrom/react-rating'
+import '@smastrom/react-rating/style.css'
 
 import { Skeleton } from "@/components/ui/skeleton"
 
@@ -18,21 +20,15 @@ export const SmallCard = ({ product }: Props) => {
                     className="aspect-object object-cover rounded-lg"
                     height="100"
                     src={product.featureImageUrl}
-                    width="100"
+                    width="100" 
                 />
             </div>
             <div className="flex flex-col justify-between min-h-[100px]">
                 <div>
                     <p className="text-md font-semibold">{product.name.slice(0, 40)}...</p>
                     <div className="flex items-center gap-x-4">
-                        <div className="flex items-center gap-0.5">
-                            <StarIcon className="w-4 h-4 fill-amber-500 text-amber-500" />
-                            <StarIcon className="w-4 h-4 fill-amber-500 text-amber-500" />
-                            <StarIcon className="w-4 h-4 fill-amber-500 text-amber-500" />
-                            <StarIcon className="w-4 h-4 fill-amber-500 text-amber-500" />
-                            <StarIcon className="w-4 h-4 fill-muted stroke-muted-foreground" />
-                        </div>
-                        <p className="text-sm text-muted-foreground">(4.0)</p>
+                        <Rating value={product.averageRating} readOnly style={{ maxWidth: 100 }} />
+                        <p className="text-sm text-muted-foreground">({product.averageRating})</p>
                     </div>
                 </div>
                 <p className="text-slate-700 text-md">&#2547;{product.discountPrice ? product.discountPrice : product.price}</p>

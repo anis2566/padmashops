@@ -32,7 +32,7 @@ export const Cart = () => {
     return (
        <HoverCard>
             <HoverCardTrigger asChild>
-                <div className="relative">
+                <div className="relative md:hidden">
                     <Link href="/cart">
                         <Button variant="outline" size="icon">
                             <ShoppingBasket className="h-[1.2rem] w-[1.2rem] dark:text-white" />

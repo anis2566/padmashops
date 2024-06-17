@@ -3,13 +3,13 @@
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { UploadDropzone } from "@/lib/uploadthing"
 import Image from "next/image"
 import {CalendarDays,RotateCw,Trash} from "lucide-react"
 import { format } from "date-fns"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { useMutation } from "@tanstack/react-query"
+import { UploadDropzone } from "@/lib/uploadthing"
 
 import {
   Breadcrumb,
@@ -136,7 +136,7 @@ const CreateCoupon = () => {
                         <CardTitle>Media </CardTitle>
                         <CardDescription>Provide coupon image</CardDescription>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="px-0 md:px-5">
                         <FormField
                             control={form.control}
                             name="imageUrl"
@@ -312,7 +312,7 @@ const CreateCoupon = () => {
                                             </FormControl>
                                                 <SelectContent>
                                                     {
-                                                        ["INACTIVE", "ACTIVE"].map((item, index) => (
+                                                        ["inactive", "active"].map((item, index) => (
                                                             <SelectItem value={item} key={index}>{item}</SelectItem>
                                                         ))
                                                     }

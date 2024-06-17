@@ -19,7 +19,7 @@ const Invoice = async ({ params }: Props) => {
     const order = await db.order.findUnique({
         where: {
             id: params.orderId
-        },
+        }, 
         include: {
             user: true,
             shippingInfo: true,
@@ -74,7 +74,7 @@ const Invoice = async ({ params }: Props) => {
                                         <TableCell className="font-medium">{item.product.name.slice(0, 30)}</TableCell>
                                         <TableCell>{item.quantity}</TableCell>
                                         <TableCell>{item.quantity}</TableCell>
-                                        <TableCell>{item.price * item.quantity}</TableCell>
+                                        <TableCell>&#2547;{item.price * item.quantity}</TableCell>
                                     </TableRow>
                                 ))
                             }
@@ -84,7 +84,7 @@ const Invoice = async ({ params }: Props) => {
                 <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-800 flex items-center justify-between">
                     <div className="hidden sm:flex text-sm text-gray-500 dark:text-gray-400">Thank you for your business!</div>
                     <div className="flex items-center gap-4">
-                        <div className="font-semibold text-lg">Total: BDT {order.total + order.deliveryFee}</div>
+                        <div className="font-semibold text-lg">Total: &#2547;{order.total + order.deliveryFee}</div>
                         <InvoicePDF order={order} />
                     </div>
                 </div>

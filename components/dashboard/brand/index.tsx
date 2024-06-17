@@ -2,7 +2,7 @@
 
 import { EllipsisVertical, Eye, Pen, Trash2 } from "lucide-react"
 import Link from "next/link"
-import { Brand } from "@prisma/client"
+import { Brand, Product } from "@prisma/client"
 
 import {
     Table,
@@ -21,11 +21,16 @@ import {
   } from "@/components/ui/dropdown-menu"
   import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
+
 import { useBrand } from "@/hooks/use-brand"
 import { Empty } from "@/components/empty"
 
+interface BrandWithProduct extends Brand {
+    products: {id:string}[]
+}
+
 interface BrandListProps {
-    brands: Brand[]
+    brands: BrandWithProduct[]
 }
 
 export const BrandList = ({brands}:BrandListProps) => {
@@ -40,25 +45,25 @@ export const BrandList = ({brands}:BrandListProps) => {
                     <Table>
                         <TableHeader>
                             <TableRow>
-                                <TableHead>Image</TableHead>
-                                <TableHead>Name</TableHead>
-                                <TableHead>Products</TableHead>
-                                <TableHead>Action</TableHead>
+                                <TableHead className="px-1">Image</TableHead>
+                                <TableHead className="px-1">Name</TableHead>
+                                <TableHead className="px-1">Products</TableHead>
+                                <TableHead className="px-1">Action</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {
                                 brands.map(brand => (
                                     <TableRow key={brand.id}>
-                                        <TableCell className="py-2">
+                                        <TableCell className="px-1 py-2">
                                             <Avatar className="w-9 h-9">
                                                 <AvatarImage src={brand.imageUrl} />
                                                 <AvatarFallback>{brand.name}</AvatarFallback>
                                             </Avatar>
                                         </TableCell>
-                                        <TableCell className="py-2">{brand.name}</TableCell>
-                                        <TableCell className="py-2">10</TableCell>
-                                        <TableCell className="py-2">
+                                        <TableCell className="px-1 py-2">{brand.name}</TableCell>
+                                        <TableCell className="px-1 py-2">{brand.products.length}</TableCell>
+                                        <TableCell className="px-1 py-2">
                                             <DropdownMenu>
                                                 <DropdownMenuTrigger asChild>
                                                     <Button variant="ghost" className="h-8 w-8 p-0">
@@ -68,9 +73,9 @@ export const BrandList = ({brands}:BrandListProps) => {
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end">
                                                     <DropdownMenuItem asChild>
-                                                        <Link href={`/dashboard/brand/products/${brand.id}`} className="flex items-center gap-x-3">
+                                                        <Link href={`/dashboard/brand/${brand.id}`} className="flex items-center gap-x-3">
                                                             <Eye className="w-4 h-4" />
-                                                            View Product
+                                                            View Products
                                                         </Link>
                                                     </DropdownMenuItem>
                                                     <DropdownMenuItem asChild>

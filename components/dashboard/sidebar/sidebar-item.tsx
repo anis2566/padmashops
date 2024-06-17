@@ -5,14 +5,19 @@ import { LucideIcon } from "lucide-react"
 import { usePathname } from "next/navigation"
 
 import { cn } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge"
 
 interface SidebarItemProps {
     label: string,
     href: string,
-    icon: LucideIcon
+    icon: LucideIcon;
+    pendingOrders?: number;
 }
 
-export const SidebarItem = ({ label, href, icon: Icon }: SidebarItemProps) => {
+export const SidebarItem = ({ label, href, icon: Icon, pendingOrders }: SidebarItemProps) => {
+
+
+
     const pathname = usePathname()
 
     // List of routes that require an exact match
@@ -33,6 +38,14 @@ export const SidebarItem = ({ label, href, icon: Icon }: SidebarItemProps) => {
         >
             <Icon className="h-4 w-4" />
             {label}
+            <Badge
+                className={cn(
+                    "ml-auto hidden h-6 w-6 shrink-0 items-center justify-center rounded-full",
+                    label === "Orders" && "flex"
+                )}
+            >
+                {pendingOrders}
+            </Badge>
         </Link>
     )
 }

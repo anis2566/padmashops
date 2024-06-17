@@ -6,11 +6,6 @@ import { useQuery } from "@tanstack/react-query"
 
 import { Skeleton } from "@/components/ui/skeleton"
 
-import { Preview } from "@/components/preview"
-import { GET_PRODUCT } from "@/actions/product.action"
-// import { Reviews } from "@/components/home/product/reviews"
-import { ProductInfo, ProductInfoSkeleton } from "@/components/home/product/product-info"
-import { ProductImages, ProductImagesSkeleton } from "@/components/home/product/product-image"
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -19,7 +14,13 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+
+import { Preview } from "@/components/preview"
+import { GET_PRODUCT } from "@/actions/product.action"
+import { ProductInfo, ProductInfoSkeleton } from "@/components/home/product/product-info"
+import { ProductImages, ProductImagesSkeleton } from "@/components/home/product/product-image"
 import { Reviews } from "@/components/home/review"
+import { RelatedProducts } from "@/components/home/product/related-products"
 
 const ProductDetails = ({ params }: { params: { productId: string } }) => {
 
@@ -29,13 +30,14 @@ const ProductDetails = ({ params }: { params: { productId: string } }) => {
             const res = await GET_PRODUCT(params.productId)
             return res.product
         },
-        enabled: !!params.productId
+        enabled: !!params.productId,
+        refetchOnWindowFocus: false
     })
 
 
     return (
         <div className="w-full max-w-screen-xl mx-auto space-y-4 mt-4">
-            <Breadcrumb>
+            <Breadcrumb className="px-2">
                 <BreadcrumbList>
                     <BreadcrumbItem>
                         <BreadcrumbLink href="/">Home</BreadcrumbLink>
@@ -90,11 +92,15 @@ const ProductDetails = ({ params }: { params: { productId: string } }) => {
                         }
                     </TabsContent>
                     <TabsContent value="reveiws" className="w-full max-w-[1200px] mx-auto">
-                        <Reviews productId={params.productId} />
+                        {
+                            product && (
+                                <Reviews product={product} productId={params.productId} />
+                            )
+                        }
                     </TabsContent>
                 </Tabs>
 
-                {/* <RelatedProducts /> */}
+                <RelatedProducts category={product?.category?.name ?? ""} productId={params.productId} />
             </div>
         </div>
     )

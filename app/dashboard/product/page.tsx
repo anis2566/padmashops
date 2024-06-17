@@ -43,8 +43,7 @@ const Products = async ({ searchParams }: Props) => {
             stocks: true
         },
         orderBy: {
-            ...(sort === 'asc' && { name: 'asc' }),
-            ...(sort === 'desc' && { name: 'desc' }),
+            createdAt: sort === "asc" ? "asc" : "desc"
         },
         skip: (currentPage - 1) * itemsPerPage,
         take: itemsPerPage,
@@ -60,7 +59,7 @@ const Products = async ({ searchParams }: Props) => {
         }
     }) 
 
-    const totalPage = Math.ceil(totalProduct / itemsPerPage)
+    const totalPage = Math.round(totalProduct / itemsPerPage)
 
     
     return (
@@ -85,7 +84,7 @@ const Products = async ({ searchParams }: Props) => {
                 </Link>
             </div>
 
-            <Card>
+            <Card className="w-[350px] sm:w-full mx-auto">
                 <CardHeader>
                     <CardTitle>Product List</CardTitle>
                     <CardDescription>A collection of your product.</CardDescription>

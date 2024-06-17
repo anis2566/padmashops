@@ -6,15 +6,19 @@ import { FaXTwitter } from "react-icons/fa6";
 import { Separator } from "@/components/ui/separator"
 import { Logo } from "@/components/logo"
 import { SocialIconBox } from "./social-icon-box"
+import Image from "next/image";
 
 export const Footer = () => {
     return (
-        <div className="px-4 space-y-6 w-full max-w-screen-xl mx-auto bg-white py-4 mt-4">
+        <div className="px-4 space-y-6 w-full max-w-screen-xl mx-auto bg-white py-4">
             <Separator />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-y-7">
                 <div className="space-y-3 col-end">
                     <div>
-                        <Logo callbackUrl="/" />
+                        <Link href={"/"} className="flex items-center gap-2">
+                            <Image src="/logo.svg" alt="Logo" width={40} height={40} />
+                            <span className="flex md:gap-x-2 text-lg font-semibold">E-<span className="text-primary">Shops</span></span>
+                        </Link>
                         <p className="text-muted-foreground">An assistant on your shopping</p>
                     </div>
                     <div className="flex items-center gap-x-2">
@@ -41,9 +45,6 @@ export const Footer = () => {
                     <Link href="/contact" className="hover:ml-2 hover:underline transition-all duration-200">
                         Contact Us
                     </Link>
-                    <Link href="/support" className="hover:ml-2 hover:underline transition-all duration-200">
-                        Support
-                    </Link>
                 </div>
                 <div className="flex flex-col space-y-2">
                     <p className="text-2xl font-bold">Account</p>
@@ -53,11 +54,8 @@ export const Footer = () => {
                     <Link href="/wishlist" className="hover:ml-2 hover:underline transition-all duration-200">
                         My Wishlist
                     </Link>
-                    <Link href="/track-order" className="hover:ml-2 hover:underline transition-all duration-200">
-                        Track My Order
-                    </Link>
-                    <Link href="/support" className="hover:ml-2 hover:underline transition-all duration-200">
-                        Support
+                    <Link href="/account" className="hover:ml-2 hover:underline transition-all duration-200">
+                        Account
                     </Link>
                 </div>
             </div>
@@ -75,9 +73,9 @@ export const Footer = () => {
                         <SocialIconBox icon={FaYoutube} bgcolor="bg-[#FF0000]" href="https://youtube.com" />
                     </div>
                 </div>
-                <div className="space-y-2">
+                <div className="">
                     <p>Developed By</p>
-                    <p className="font-semibold">Animegh IT Care</p>
+                    <p className="font-semibold italic">Animegh IT Care</p>
                 </div>
             </div>
         </div>

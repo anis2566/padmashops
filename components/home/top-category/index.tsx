@@ -14,7 +14,8 @@ export const TopCategory = () => {
             const res = await GET_CATEGORIES()
             return res.categories
         },
-        staleTime: 60 * 60 * 1000
+        staleTime: 60 * 60 * 1000, 
+        refetchOnWindowFocus: false
     })
 
     if (isFetching) {
@@ -42,7 +43,7 @@ export const TopCategory = () => {
                             <p className="text-md font-semibold text-slate-700">
                                 {category.name}
                             </p>
-                            <p className="text-muted-foreground text-xs">10 Items</p>
+                            <p className="text-muted-foreground text-xs">{category.products.length} Items</p>
                         </Link>
                     ))
                 }

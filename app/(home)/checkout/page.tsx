@@ -8,6 +8,7 @@ import { CreditCard, HandCoins, PlusCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { SignInButton, useAuth } from "@clerk/nextjs";
 
 import {
   Form,
@@ -51,6 +52,7 @@ const Checkout = () => {
   const { cart, resetCart } = useCart()
   const { onOpen } = useConfettiStore()
   const router = useRouter()
+  const {isSignedIn} = useAuth()
 
   const total = cart.reduce((acc, curr) => {
     return acc + (curr.price * curr.quantity)
@@ -76,6 +78,7 @@ const Checkout = () => {
       return res.addresses;
     },
     staleTime: 60 * 60 * 1000,
+    enabled: isSignedIn
   });
 
   const form = useForm<z.infer<typeof OrderSchema>>({
@@ -90,6 +93,7 @@ const Checkout = () => {
       deliveryFee: 120,
     },
   });
+  form.watch("shippingInfoId")
 
   const { mutate: createOrder, isPending } = useMutation({
     mutationFn: CREATE_ORDER,
@@ -131,82 +135,86 @@ const Checkout = () => {
       >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
           <div className="md:col-span-2 space-y-5">
-            <Card>
-              <CardHeader>
-                <CardTitle>Saved Address</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {
-                  address?.length === 0 && (
-                    <span className="italic text-muted-foreground">No saved address</span>
-                  )
-                }
-                <FormField
-                  control={form.control}
-                  name="shippingInfoId"
-                  render={({ field }) => (
-                    <FormItem className="space-y-3">
-                      <FormControl>
-                        <RadioGroup
-                          defaultValue={field.value}
-                          className="flex items-center flex-wrap md:flex-nowrap gap-x-2"
-                          onValueChange={(value) => {
-                            field.onChange(value)
-                            const div = address?.find(item => item.id === value)?.division
-                            form.setValue("deliveryFee", calculateDeliveryFee(div || "Rangpur"))
-                          }}
+            {
+              isSignedIn && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Saved Address</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    {
+                      address?.length === 0 && (
+                        <span className="italic text-muted-foreground">No saved address</span>
+                      )
+                    }
+                    <FormField
+                      control={form.control}
+                      name="shippingInfoId"
+                      render={({ field }) => (
+                        <FormItem className="space-y-3">
+                          <FormControl>
+                            <RadioGroup
+                              defaultValue={field.value}
+                              className="flex items-center flex-wrap md:flex-nowrap gap-x-2"
+                              onValueChange={(value) => {
+                                field.onChange(value)
+                                const div = address?.find(item => item.id === value)?.division
+                                form.setValue("deliveryFee", calculateDeliveryFee(div || "Rangpur"))
+                              }}
+                              disabled={isPending}
+                            >
+                              {isFetching
+                                ? Array.from({ length: 3 }, (_, i) => (
+                                  <Skeleton key={i} className="w-[150px] h-10" />
+                                ))
+                                : address?.map((address) => (
+                                  <FormItem
+                                    className={cn(
+                                      "flex border w-full max-w-[130px] px-2 py-3 rounded-md border-gray-300 items-center space-x-3 space-y-0",
+                                      field.value === address.id &&
+                                      "border-primary"
+                                    )}
+                                    key={address.id}
+                                  >
+                                    <FormControl>
+                                      <RadioGroupItem
+                                        value={address.id}
+                                        checked={form.watch("shippingInfoId") === address.id}
+                                      />
+                                    </FormControl>
+                                    <FormLabel
+                                      className={cn(
+                                        "",
+                                        field.value === address.id &&
+                                        "text-primary"
+                                      )}
+                                    >
+                                      {address.title}
+                                    </FormLabel>
+                                  </FormItem>
+                                ))}
+                            </RadioGroup>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    {form.watch("shippingInfoId") !== "" && (
+                      <div className="flex justify-end">
+                        <Button
+                          className="flex items-center gap-x-2"
+                          onClick={() => form.resetField("shippingInfoId")}
                           disabled={isPending}
                         >
-                          {isFetching
-                            ? Array.from({ length: 3 }, (_, i) => (
-                              <Skeleton key={i} className="w-[150px] h-10" />
-                            ))
-                            : address?.map((address) => (
-                              <FormItem
-                                className={cn(
-                                  "flex border w-full max-w-[130px] px-2 py-3 rounded-md border-gray-300 items-center space-x-3 space-y-0",
-                                  field.value === address.id &&
-                                  "border-primary"
-                                )}
-                                key={address.id}
-                              >
-                                <FormControl>
-                                  <RadioGroupItem
-                                    value={address.id}
-                                    checked={field.value === address.id}
-                                  />
-                                </FormControl>
-                                <FormLabel
-                                  className={cn(
-                                    "",
-                                    field.value === address.id &&
-                                    "text-primary"
-                                  )}
-                                >
-                                  {address.title}
-                                </FormLabel>
-                              </FormItem>
-                            ))}
-                        </RadioGroup>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                {form.watch("shippingInfoId") !== "" && (
-                  <div className="flex justify-end">
-                    <Button
-                      className="flex items-center gap-x-2"
-                      onClick={() => form.resetField("shippingInfoId")}
-                      disabled={isPending}
-                    >
-                      <PlusCircle className="w-5 h-5" />
-                      New
-                    </Button>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+                          <PlusCircle className="w-5 h-5" />
+                          New
+                        </Button>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              )
+            }
 
             <Collapsible open={form.watch("shippingInfoId") === ""}>
               <CollapsibleContent>
@@ -375,9 +383,17 @@ const Checkout = () => {
               </CardContent>
             </Card>
 
-            <Button type="submit" disabled={isPending}>
-              Place Order
-            </Button>
+            {
+              isSignedIn ? (
+              <Button type="submit" disabled={isPending}>
+                Place Order
+              </Button>
+              ) : (
+                  <Button asChild type="button">
+                    <SignInButton mode="modal" forceRedirectUrl="/checkout">Login to Order</SignInButton>
+                  </Button>
+              )
+            }
           </div>
         </div>
       </form>

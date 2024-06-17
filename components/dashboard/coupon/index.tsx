@@ -43,37 +43,37 @@ export const CouponList = ({ coupons }: Props) => {
                     <Table>
                         <TableHeader>
                             <TableRow>
-                            <TableHead className="">Image</TableHead>
-                            <TableHead className="">Name</TableHead>
-                            <TableHead className="">Code</TableHead>
-                            <TableHead className="">Value</TableHead>
-                            <TableHead className="">Start</TableHead>
-                            <TableHead className="">End</TableHead>
-                            <TableHead className="">Status</TableHead>
-                            <TableHead className="">Action</TableHead>
+                            <TableHead className="px-1">Image</TableHead>
+                            <TableHead className="px-1">Name</TableHead>
+                            <TableHead className="px-1">Code</TableHead>
+                            <TableHead className="px-1">Value</TableHead>
+                            <TableHead className="px-1">Start</TableHead>
+                            <TableHead className="px-1">End</TableHead>
+                            <TableHead className="px-1">Status</TableHead>
+                            <TableHead className="px-1">Action</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {
                                 coupons.map(coupon => (
                                 <TableRow key={coupon.id}>
-                                    <TableCell className="py-2">
+                                    <TableCell className="px-1 py-2">
                                         <Avatar className="w-9 h-9">
                                             <AvatarImage src={coupon.imageUrl || ""} />
                                             <AvatarFallback>C</AvatarFallback>
                                         </Avatar>
                                     </TableCell>
-                                    <TableCell className="py-2">{coupon.name}</TableCell>
-                                    <TableCell className="py-2 uppercase">{coupon.code}</TableCell>
-                                    <TableCell className="py-2 uppercase">{coupon.value}</TableCell>
-                                    <TableCell className="py-2 uppercase">{format(coupon.startDate, "dd MMMM yyyy")}</TableCell>
-                                    <TableCell className="py-2 uppercase">{format(coupon.startDate, "dd MMMM yyyy")}</TableCell>
-                                    <TableCell className="py-2 uppercase">
-                                        <Badge className={cn("", coupon.status === "INACTIVE" && "bg-rose-500")}>{coupon.status}</Badge>    
+                                    <TableCell className="px-1 py-2">{coupon.name}</TableCell>
+                                    <TableCell className="px-1 py-2 uppercase">{coupon.code}</TableCell>
+                                    <TableCell className="px-1 py-2 uppercase">{coupon.value}</TableCell>
+                                    <TableCell className="px-1 py-2 uppercase">{format(coupon.startDate, "dd MMMM yyyy")}</TableCell>
+                                    <TableCell className="px-1 py-2 uppercase">{format(coupon.startDate, "dd MMMM yyyy")}</TableCell>
+                                    <TableCell className="px-1 py-2 uppercase">
+                                        <Badge className={cn("text-white bg-green-500", coupon.status === "inactive" && "bg-rose-500")}>{coupon.status}</Badge>    
                                     </TableCell>
-                                    <TableCell className="py-2">
+                                    <TableCell className="px-1 py-2">
                                         <DropdownMenu>
-                                            <DropdownMenuTrigger asChild>
+                                            <DropdownMenuTrigger asChild> 
                                             <Button variant="ghost" className="h-8 w-8 p-0">
                                                 <span className="sr-only">Open menu</span>
                                                 <EllipsisVertical className="h-4 w-4" />

@@ -2,6 +2,7 @@
 
 import { CirclePercent } from "lucide-react"
 import { useQuery } from "@tanstack/react-query"
+import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
 
@@ -15,7 +16,8 @@ export const DailyBestDeal = () => {
             const { products } = await GET_BEST_DEAL_PRODUCTS();
             return products;
         },
-        staleTime: 60 * 60 * 1000
+        staleTime: 60 * 60 * 1000,
+        refetchOnWindowFocus: false
     })
 
     return (
@@ -25,7 +27,11 @@ export const DailyBestDeal = () => {
                     <CirclePercent className="w-7 h-7 text-primary" />
                     <h1 className="text-xl font-semibold text-slate-700">Daily Best Deal</h1>
                 </div>
-                <Button className="rounded-full">See All</Button>
+                <Button className="rounded-full" asChild>
+                    <Link href={`/shop?tag=best-deal`}>
+                        See All
+                    </Link>
+                </Button>
             </div>
 
             <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-y-4 gap-x-4">

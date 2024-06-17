@@ -9,6 +9,7 @@ import {
 import { generateInvoiceId } from "@/lib/utils";
 import { getAdmin, getUser } from "@/services/user.services";
 import { sendNotification } from "@/services/notification.services";
+import { revalidatePath } from "next/cache";
 
 type CreateOrder = {
   order: OrderSchemaType;
@@ -58,7 +59,9 @@ export const CREATE_ORDER = async ({ order, products }: CreateOrder) => {
           data: products.map(product => ({
             productId: product.productId,
             quantity: product.quantity,
-            price: product.price
+            price: product.price,
+            size: product.size,
+            color: product.color
           })),
         },
       },
@@ -119,141 +122,115 @@ export const CREATE_ORDER = async ({ order, products }: CreateOrder) => {
 
 type UpdateOrder = {
   orderId: string;
-  products: OrderProductSchemaType[];
   status: string;
 };
 
-// export const UPDATE_ORDER = async ({
-//   orderId,
-//   products,
-//   status,
-// }: UpdateOrder) => {
-//   const order = await db.order.findUnique({
-//     where: {
-//       id: orderId,
-//     },
-//   });
+export const UPDATE_ORDER = async ({
+  orderId,
+  status,
+}: UpdateOrder) => {
+  const order = await db.order.findUnique({
+    where: {
+      id: orderId,
+    },
+    include: {
+      products: true
+    }
+  });
 
-//   if (!order) {
-//     throw new Error("Order not found");
-//   }
+  if (!order) {
+    throw new Error("Order not found");
+  }
 
-//   if (status === "returned") {
-//     for (const product of products) {
-//       if (!product.size) {
-//         await db.product.update({
-//           where: {
-//             id: product.productId,
-//           },
-//           data: {
-//             totalStock: { increment: product.quantity },
-//           },
-//         });
-//       } else {
-//         const stock = await db.stock.findFirst({
-//           where: {
-//             productId: product.productId,
-//             size: product.size,
-//           },
-//         });
+  if (status === "returned") {
+    for (const product of order.products) {
+      if (product.size) {
+        const stock = await db.stock.findFirst({
+          where: {
+            productId: product.productId,
+            size: product.size,
+          },
+        });
 
-//         await db.stock.update({
-//           where: {
-//             id: stock?.id,
-//           },
-//           data: {
-//             stock: { increment: product.quantity },
-//           },
-//         });
+        await db.stock.update({
+          where: {
+            id: stock?.id,
+          },
+          data: {
+            stock: { increment: product.quantity },
+          },
+        });
+      }
+      await db.product.update({
+        where: {
+          id: product.productId,
+        },
+        data: {
+          totalStock: { increment: product.quantity },
+        },
+      });
+    }
+  }
 
-//         await db.product.update({
-//           where: {
-//             id: product.productId,
-//           },
-//           data: {
-//             totalStock: { increment: product.quantity },
-//           },
-//         });
-//       }
-//     }
-//   }
+  if (status === "delivered") {
+    for (const product of order.products) {
+      await db.product.update({
+        where: {
+          id: product.productId
+        },
+        data: {
+          totalSell: {increment: product.quantity}
+        }
+      })
+    }
+  }
 
-//   await db.order.update({
-//     where: {
-//       id: orderId,
-//     },
-//     data: {
-//       status,
-//     },
-//   });
+  await db.order.update({
+    where: {
+      id: orderId,
+    },
+    data: {
+      status,
+    },
+  });
 
-//   const user = await db.user.findUnique({
-//     where: {
-//       id: order.userId,
-//     },
-//   });
-//   const { adminClerId } = await getAdmin();
+  const user = await db.user.findUnique({
+    where: {
+      id: order.userId,
+    },
+  });
 
-//   await sendNotification({
-//     trigger: "customer-order-admin",
-//     actor: {
-//       id: adminClerId,
-//     },
-//     recipients: [user?.clerkId || ""],
-//     data: {
-//       status,
-//       redirectUrl: `/account/orders/${order.id}`,
-//       invoice: order.invoiceId,
-//     },
-//   });
+  const { adminClerkId } = await getAdmin();
 
-//   revalidatePath(`/dashboard/orders/${orderId}`);
+  await sendNotification({
+    trigger: "new-order-admin",
+    actor: {
+      id: adminClerkId,
+    },
+    recipients: [user?.clerkId || ""],
+    data: {
+      status,
+      redirectUrl: `/account/orders/${order.id}`,
+      invoice: order.invoiceId,
+    },
+  });
 
-//   return {
-//     success: "Status updated",
-//   };
-// };
+  revalidatePath(`/dashboard/orders/${orderId}`);
+
+  return {
+    success: "Status updated",
+  };
+};
 
 
-type UserOrders = {
-  page: string | null
-  perPage: string | null
-  status: string;
+export const GET_PENDING_ORDER = async () => {
+  const pendingOrders = await db.order.count({
+    where: {
+      status: "pending"
+    }
+  })
+console.log(pendingOrders)
+  return {
+    pendingOrders
+  }
 }
-
-// export const GET_USER_ORDER = async (values: UserOrders) => {
-//   const {status} = values
-//   const itemsPerPage = parseInt(values.perPage || "5");  
-//   const currentPage = parseInt(values.page || "1");
-
-//   const {userId} = await getUser()
-
-//   const orders = await db.order.findMany({
-//         where: {
-//             userId,
-//             ...(status !== "all" && {status})
-//         },
-//         include: {
-//             products: {
-//                 include: {
-//                     product: {
-//                         select: {
-//                             featureImageUrl: true
-//                         }
-//                     }
-//                 }
-//             }
-//         },
-//         orderBy: {
-//             createdAt: "desc"
-//         },
-//         skip: (currentPage - 1) * itemsPerPage,
-//         take: itemsPerPage,
-//     })
-
-//     console.log(orders)
-
-//   return {
-//     orders
-//   }
-// }

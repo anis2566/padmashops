@@ -19,7 +19,8 @@ import {
     HandCoins,
     Flame,
     UserRoundCog,
-    LucideIcon
+    LucideIcon,
+    UserRoundCheck
   } from "lucide-react";
   
   type DashboardSidebar = {
@@ -55,9 +56,14 @@ import {
       icon: ShoppingCart,
     },
     {
-      label: "Users",
-      href: "/dashboard/users",
+      label: "Customers",
+      href: "/dashboard/customers",
       icon: Users,
+    },
+    {
+      label: "Subscriers",
+      href: "/dashboard/subscribers",
+      icon: UserRoundCheck,
     },
     {
       label: "Coupon",
@@ -170,4 +176,28 @@ import {
           href: "/account/profile",
           icon: UserCog
       },
-  ] as const;
+] as const;
+  
+
+export const CLIENT_SIDEBAR = [
+  {
+    label: "Banner",
+    href: "/dashboard/banner",
+    icon: TicketSlash,
+  },
+  {
+    label: "F. Products",
+    href: "/dashboard/feature-products",
+    icon: Feather,
+  },
+  {
+    label: "P. Products",
+    href: "/dashboard/popular-products",
+    icon: Popcorn,
+  },
+  {
+    label: "Best Deal",
+    href: "/dashboard/best-deal",
+    icon: CirclePercent,
+  },
+] as const;

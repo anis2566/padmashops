@@ -151,7 +151,7 @@ export const InvoicePDF = ({ order }: Props) => {
 
     return (
         <Button variant="outline" size="sm" asChild>
-            <PDFDownloadLink document={<Pdf />}>
+            <PDFDownloadLink document={<Pdf />} fileName='Invoice'>
                 Download Invoice
             </PDFDownloadLink>
         </Button>

@@ -15,7 +15,8 @@ export const HeroCategory = () => {
       const res = await GET_CATEGORIES()
       return res.categories
     },
-    staleTime: 60 * 60 * 1000
+    staleTime: 60 * 60 * 1000,
+    refetchOnWindowFocus: false
   })
 
   if (isFetching) {
@@ -23,7 +24,7 @@ export const HeroCategory = () => {
   }
 
   return (
-    <div className="hidden sm:block w-[250px] bg-white max-h-[400px] overflow-y-auto">
+    <div className="hidden sm:block w-[250px] bg-white max-h-[280px] overflow-y-auto">
       {
         categories?.map(category => (
           <Link href={`/shop?category=${category.name}`} key={category.id} className="w-full py-2 px-4 flex items-center gap-x-2 hover:bg-primary hover:text-white">
@@ -45,7 +46,7 @@ export const HeroCategory = () => {
 
 const CategorySkeleton = () => {
   return (
-    <div className="hidden sm:block w-[250px] bg-white max-h-[400px] overflow-y-auto space-y-2">
+    <div className="hidden sm:block w-[250px] bg-white max-h-[280px] overflow-y-auto space-y-2 p-2">
       {
         Array.from({ length: 5 }, (_, index) => (
           <Skeleton className="w-full h-10" key={index} />
