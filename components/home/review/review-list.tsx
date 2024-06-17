@@ -36,7 +36,6 @@ export const ReviewList = ({ product, productId }: ReviewListProps) => {
             return res
         },
     })
-    console.log(data)
 
     const handlePrev = () => {
         setPage((prevPage) => prevPage - 1);
@@ -97,7 +96,7 @@ export const ReviewList = ({ product, productId }: ReviewListProps) => {
                     </Button>
                     <div className="hidden md:flex">
                         {
-                            Array.from({ length: Math.ceil(product.ratingCount / 3) }, (_, i) => (
+                            Array.from({ length: Math.round(product.ratingCount / 3) }, (_, i) => (
                                 <PaginationItem key={i}>
                                     <Button variant="ghost" size="icon" onClick={() => handleClick((i+1))} disabled={page === i + 1}>
                                         {i + 1}

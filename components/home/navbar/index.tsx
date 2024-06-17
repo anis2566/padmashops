@@ -1,5 +1,5 @@
-import { Menu } from "lucide-react"
-import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs"
+import { Loader2, Menu } from "lucide-react"
+import { ClerkLoading, SignInButton, SignedIn, SignedOut } from "@clerk/nextjs"
 
 import { Button } from "@/components/ui/button"
 
@@ -31,6 +31,9 @@ export const Navbar = () => {
                     </div>
                 </SignedIn>
                 <SignedOut>
+                    <ClerkLoading>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                    </ClerkLoading>
                     <Button asChild size="sm" className="p-2">
                         <SignInButton forceRedirectUrl="/" mode="modal">Login</SignInButton>
                     </Button>
