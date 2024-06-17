@@ -6,8 +6,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <ThemeProvider
             attribute="class"
-            defaultTheme="system"
-            enableSystem
+            defaultTheme="dark"
             disableTransitionOnChange
         >
             <main className="min-h-screen w-full flex relative">
