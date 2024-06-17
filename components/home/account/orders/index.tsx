@@ -46,7 +46,7 @@ export const OrderList = ({ orders }: OrderListProps) => {
             <TableBody>
                 {
                     orders.map(order => (
-                        <TableRow>
+                        <TableRow key={order.id}>
                             <TableCell className="p-1 flex items-center">
                                 {
                                     order.products.map((item, i) => (

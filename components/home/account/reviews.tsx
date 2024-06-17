@@ -24,7 +24,7 @@ export const Reviews = () => {
         <Card>
             <CardHeader className="pb-4">
                 <CardTitle>Pending Reviews</CardTitle>
-                <CardDescription>Submit reviews for the products you've purchased.</CardDescription>
+                <CardDescription>Submit reviews for the products you have purchased.</CardDescription>
             </CardHeader>
             <CardContent>
                 <div className="grid gap-4">
