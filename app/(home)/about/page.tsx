@@ -9,7 +9,7 @@ const About = () => {
                         Discover the Best Products for Your Lifestyle
                     </h1>
                     <p className="max-w-[600px] text-gray-500 md:text-xl dark:text-gray-400">
-                        At E-shop Ecommerce, we're dedicated to providing our customers with a seamless and enjoyable shopping
+                        At E-shop Ecommerce, we are dedicated to providing our customers with a seamless and enjoyable shopping
                         experience. Our mission is to curate a wide selection of high-quality products that cater to your
                         unique needs and preferences.
                     </p>
@@ -32,8 +32,8 @@ const About = () => {
                         </div>
                         <h2 className="text-4xl font-bold tracking-tighter">Experience the Difference</h2>
                         <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed text-muted-foreground">
-                        At E-shop Ecommerce, we're committed to providing you with a seamless and secure shopping experience.
-                        Explore our key features and discover why we're the best choice for all your ecommerce needs.
+                        At E-shop Ecommerce, we are committed to providing you with a seamless and secure shopping experience.
+                        Explore our key features and discover why we are the best choice for all your ecommerce needs.
                         </p>
                     </div>
                     </div>
@@ -63,7 +63,7 @@ const About = () => {
                             <h3 className="text-xl font-bold">Wide Selection</h3>
                             <p className="text-gray-500 dark:text-gray-400">
                                 Explore our vast collection of high-quality products across a wide range of categories to find
-                                exactly what you're looking for.
+                                exactly what you are looking for.
                             </p>
                             </div>
                         </li>
