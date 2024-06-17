@@ -8,6 +8,7 @@ import { DeleteCategoryModal } from "@/components/dashboard/modals/category.moda
 import { DeleteCouponModal } from "@/components/dashboard/modals/coupon.modal"
 import { DeleteCustomerModal } from "@/components/dashboard/modals/customer.modal"
 import { RemoveFeatureProductModal } from "@/components/dashboard/modals/feature-product.modal"
+import { MessageModal } from "@/components/dashboard/modals/message.modal"
 import { RemovePopularProductModal } from "@/components/dashboard/modals/popular-product.modal"
 import { DeleteProductModal } from "@/components/dashboard/modals/product.modal"
 import { DeleteAddressModal } from "@/components/home/modal/address-modal"
@@ -28,6 +29,7 @@ export const ModalProvider = () => {
             <AssignFeatureProductModal />
             <RemoveFeatureProductModal />
             <DeleteCustomerModal />
+            <MessageModal />
         </>
     )
 }

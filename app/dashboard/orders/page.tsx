@@ -19,13 +19,16 @@ interface Props {
         perPage: string;
         page: string;
         status: string;
+        date: Date;
     }
 }
 
 const Orders = async ({ searchParams }: Props) => {
-    const { search, perPage, page, status } = searchParams;
+    const { search, perPage, page, status, date: dateString } = searchParams;
     const pageNumber = parseInt(page) || 1;
     const pageSize = parseInt(perPage) || 5;
+
+    const date = dateString ? new Date(dateString) : null;
 
     const orders = await db.order.findMany({
         where: {
@@ -36,7 +39,13 @@ const Orders = async ({ searchParams }: Props) => {
                         contains: search, mode: "insensitive"
                     }
                 }
-            })
+            }),
+            ...(date && {
+                createdAt: {
+                    gte: new Date(date.setHours(0, 0, 0, 0)),
+                    lt: new Date(date.setHours(23, 59, 59, 999))
+                }
+            }),
         },
         include: {
             shippingInfo: {
@@ -95,7 +104,7 @@ const Orders = async ({ searchParams }: Props) => {
                     <CardTitle>Orders</CardTitle>
                     <CardDescription>A collection of your orders.</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 px-1 md:px-5">
                     <Header />
                     <OrderList orders={orders} />
                     <CustomPagination totalPage={totalPage} />

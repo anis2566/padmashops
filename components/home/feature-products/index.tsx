@@ -61,7 +61,7 @@ export function FeatureProducts() {
                                         </p>
                                     </div>
                                 </div>
-                                <Link href={`/shop/`}>
+                                <Link href={`/shop/${product.id}`}>
                                     <Button className="group-hover:translate-x-2 transition-all duration-300 ease-in-out max-w-[100px]">
                                         Shop Now
                                         <ArrowRight />

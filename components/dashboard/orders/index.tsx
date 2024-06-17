@@ -45,22 +45,22 @@ export const OrderList = ({orders}:Props) => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Product</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Price</TableHead>
-                <TableHead>D. Fee</TableHead>
-                <TableHead>Size</TableHead>
-                <TableHead>Color</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Action</TableHead>
+                <TableHead className="px-1">Product</TableHead>
+                <TableHead className="px-1">Name</TableHead>
+                <TableHead className="px-1">Price</TableHead>
+                <TableHead className="px-1">D. Fee</TableHead>
+                <TableHead className="px-1">Size</TableHead>
+                <TableHead className="px-1">Color</TableHead>
+                <TableHead className="px-1">Date</TableHead>
+                <TableHead className="px-1">Status</TableHead>
+                <TableHead className="px-1">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {
                 orders.map(order => (
                   <TableRow key={order.id}>
-                    <TableCell className="py-3 px-1 flex items-center gap-x-1">
+                    <TableCell className="px-1 py-3 px-1 flex items-center gap-x-1">
                       {
                         order.products.map((item, i) => (
                           <Avatar className="w-7 h-7" key={i}>
@@ -70,25 +70,25 @@ export const OrderList = ({orders}:Props) => {
                         ))
                       }
                     </TableCell>
-                    <TableCell className="py-3 px-1">{order.shippingInfo.name}</TableCell>
-                    <TableCell className="py-3 px-1">{formatPriceBDT(order.total)}</TableCell>
-                    <TableCell className="py-3 px-1">{formatPriceBDT(order.deliveryFee)}</TableCell>
-                    <TableCell className="py-3 px-1 uppercase">
+                    <TableCell className="px-1 py-3 px-1">{order.shippingInfo.name}</TableCell>
+                    <TableCell className="px-1 py-3 px-1">{formatPriceBDT(order.total)}</TableCell>
+                    <TableCell className="px-1 py-3 px-1">{formatPriceBDT(order.deliveryFee)}</TableCell>
+                    <TableCell className="px-1 py-3 px-1 uppercase">
                       {
                         order.products.map((item, i) => (
                           <span key={i} className="text-center block">{item.size || "-"}</span>
                         ))
                       }
                     </TableCell>
-                    <TableCell className="py-3 px-1 capitalize ">
+                    <TableCell className="px-1 py-3 px-1 capitalize ">
                       {
                         order.products.map((item, i) => (
                           <span key={i} className="text-center block">{item.color || "-"}</span>
                         ))
                       }
                     </TableCell>
-                    <TableCell className="py-3 px-1">{format(order.createdAt, "dd MMMM yyyy")}</TableCell>
-                    <TableCell className="py-3 px-1">
+                    <TableCell className="px-1 py-3 px-1">{format(order.createdAt, "dd MMMM yyyy")}</TableCell>
+                    <TableCell className="px-1 py-3 px-1">
                       <Badge
                         className={cn(
                           "capitalize text-white",
@@ -99,7 +99,7 @@ export const OrderList = ({orders}:Props) => {
                         )}
                       >{order.status}</Badge>
                     </TableCell>
-                    <TableCell className="py-3 px-1">
+                    <TableCell className="px-1 py-3 px-1">
                       <Link href={`/dashboard/orders/${order.id}`}>
                         <Button variant="ghost" size="icon">
                           <Eye className="w-5 h-5 text-primary" />
