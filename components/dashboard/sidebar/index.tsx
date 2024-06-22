@@ -5,18 +5,18 @@ import { useQuery } from "@tanstack/react-query"
 import { Separator } from "@/components/ui/separator"
 
 import { Logo } from "@/components/logo"
-import { CLIENT_SIDEBAR, DASHBOARD_SIDEBAR } from "@/constant"
+import { CLIENT_SIDEBAR, DASHBOARD_SELLER_SIDEBAR, DASHBOARD_SIDEBAR } from "@/constant"
 import { SidebarItem } from "@/components/dashboard/sidebar/sidebar-item"
 import { GET_PENDING_ORDER } from "@/actions/order.action"
 import { Headset } from "lucide-react"
 
 export const Sidebar = () => {
 
-    const {data:pendingOrders} = useQuery({
+    const {data} = useQuery({
         queryKey: ["pending-order-count"],
         queryFn: async () => {
             const res = await GET_PENDING_ORDER()
-            return res.pendingOrders
+            return res
         },
         staleTime: 60 * 60 * 1000,
         refetchOnWindowFocus: false
@@ -36,7 +36,7 @@ export const Sidebar = () => {
                             <nav className="grid items-start px-2 text-sm font-medium lg:px-4 pt-2">
                                 {
                                     DASHBOARD_SIDEBAR.map((item) => (
-                                        <SidebarItem key={item.href} {...item} pendingOrders={pendingOrders ?? 0} />
+                                        <SidebarItem key={item.href} {...item} pendingOrders={data?.pendingOrders ?? 0} />
                                     ))
                                 }
                             </nav>
@@ -44,10 +44,14 @@ export const Sidebar = () => {
                     </div>
                     <div className="flex h-full max-h-screen flex-col gap-2">
                         <div className="flex-1 mt-3 space-y-1">
-                            <p className="text-sm italic text-muted-foreground px-2 lg:px-7">Support</p>
+                            <p className="text-sm italic text-muted-foreground px-2 lg:px-7">Seller</p>
                             <Separator />
                             <nav className="grid items-start px-2 text-sm font-medium lg:px-4 pt-2">
-                                <SidebarItem label="Message" href="/dashboard/message" icon={Headset} />
+                                {
+                                    DASHBOARD_SELLER_SIDEBAR.map((item) => (
+                                        <SidebarItem key={item.href} {...item} pendingOrdersSeller={data?.pendingSellerOrders ?? 0} />
+                                    ))
+                                }
                             </nav>
                         </div>
                     </div>

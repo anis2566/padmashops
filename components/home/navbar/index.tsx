@@ -6,10 +6,10 @@ import { Button } from "@/components/ui/button"
 import { Logo } from "@/components/logo"
 import { Search } from "./search"
 import { NavDrawer } from "./nav-drawer"
-import { Notification } from "./notification"
 import { Account } from "./account"
 import { Wishlist } from "./wishlist"
 import { Cart } from "./cart"
+import { Notification } from "@/components/notification"
 
 export const Navbar = () => {
     return (

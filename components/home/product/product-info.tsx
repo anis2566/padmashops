@@ -5,6 +5,9 @@ import { StarIcon } from "lucide-react"
 import { MinusIcon, PlusIcon, HeartIcon } from "lucide-react"
 import Image from "next/image"
 import { toast } from "sonner"
+import { Rating } from '@smastrom/react-rating'
+
+import '@smastrom/react-rating/style.css'
 
 import { Label } from "@/components/ui/label"
 import { RadioGroupItem, RadioGroup } from "@/components/ui/radio-group"
@@ -12,7 +15,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Skeleton } from "@/components/ui/skeleton"
 
-import { calculateDiscountPercentage } from "@/lib/utils"
+import { calculateDiscountPercentage, cn } from "@/lib/utils"
 import { ProductWithFeature } from "@/@types"
 import { useCart } from "@/store/use-cart"
 import { useWishlist } from "@/store/use-wishlist"
@@ -71,14 +74,8 @@ export const ProductInfo = ({ product }: Props) => {
             <div className="space-y-1">
                 <h1 className="text-xl md:text-2xl font-bold text-slate-700">{product.name}</h1>
                 <div className="flex items-center gap-x-4">
-                    <div className="flex items-center gap-0.5">
-                        <StarIcon className="w-4 h-4 fill-amber-500 text-amber-500" />
-                        <StarIcon className="w-4 h-4 fill-amber-500 text-amber-500" />
-                        <StarIcon className="w-4 h-4 fill-amber-500 text-amber-500" />
-                        <StarIcon className="w-4 h-4 fill-amber-500 text-amber-500" />
-                        <StarIcon className="w-4 h-4 fill-muted stroke-muted-foreground" />
-                    </div>
-                    <p className="text-sm text-muted-foreground">(32 Reviews)</p>
+                    <Rating value={product.averageRating} readOnly style={{ maxWidth: 100 }} />
+                    <p className="text-sm text-muted-foreground">({product.ratingCount} Reviews)</p>
                 </div>
                 <Badge variant="outline">{product?.category?.name}</Badge>
 
@@ -94,7 +91,7 @@ export const ProductInfo = ({ product }: Props) => {
             </div>
 
             <div className="flex items-center gap-x-4">
-                <Badge variant="outline" className="bg-green-500 text-white">In Stock</Badge>
+                <Badge variant="outline" className={cn("bg-green-500 text-white", product.totalStock === 0 ? "bg-rose-500" : "")}>{product.totalStock === 0 ? "Stock out" : "In stock"}</Badge>
                 <p className="text-muted-foreground">({product.totalStock} remaining)</p>
             </div>
 
@@ -154,8 +151,8 @@ export const ProductInfo = ({ product }: Props) => {
             </div>
 
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <Button size="lg" onClick={handleAddToCart}>Add to cart</Button>
-                <Button size="lg" variant="outline" onClick={handleAddToWishlist}>
+                <Button size="lg" onClick={handleAddToCart} disabled={product.totalStock === 0}>Add to cart</Button>
+                <Button size="lg" variant="outline" onClick={handleAddToWishlist} disabled={product.totalStock === 0}>
                     <HeartIcon className="w-4 h-4 mr-2" />
                     Add to wishlist
                 </Button>

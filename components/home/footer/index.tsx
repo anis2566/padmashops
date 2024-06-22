@@ -16,8 +16,8 @@ export const Footer = () => {
                 <div className="space-y-3 col-end">
                     <div>
                         <Link href={"/"} className="flex items-center gap-2">
-                            <Image src="/logo.svg" alt="Logo" width={40} height={40} />
-                            <span className="flex md:gap-x-2 text-lg font-semibold">E-<span className="text-primary">Shops</span></span>
+                            <Image src="/logo.jpg" alt="Logo" width={40} height={40} />
+                            <span className="flex md:gap-x-2 text-lg font-semibold">PadmaShops</span>
                         </Link>
                         <p className="text-muted-foreground">An assistant on your shopping</p>
                     </div>
@@ -62,7 +62,7 @@ export const Footer = () => {
             <Separator />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-y-7 min-h-[100px]">
                 <div className="space-y-1">
-                    <p className="flex items-center gap-x-2"><Copyright className="w-5 h-5" />{new Date().getFullYear()}, E-Shop</p>
+                    <p className="flex items-center gap-x-2"><Copyright className="w-5 h-5" />{new Date().getFullYear()}, PadmaShops</p>
                     <p className="text-sm text-muted-foreground">All right reserved</p>
                 </div>
                 <div className="space-y-2">

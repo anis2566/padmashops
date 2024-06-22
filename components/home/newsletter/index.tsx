@@ -1,69 +1,14 @@
-"use client"
+import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-} from "@/components/ui/form"
-import { SubscribeSchema } from "@/schema/subscribe.schema"
-import { useMutation } from "@tanstack/react-query"
-import { CREATE_SUBSCRIBER } from "@/actions/subscriber.action"
-import { toast } from "sonner"
 
-export const Newsletter = () => {
-    const form = useForm<z.infer<typeof SubscribeSchema>>({
-        resolver: zodResolver(SubscribeSchema),
-            defaultValues: {
-                email: "",
-        },
-    })
-
-    const {mutate: createSubscribe, isPending} = useMutation({
-        mutationFn: CREATE_SUBSCRIBER,
-        onSuccess: (data) => {
-            form.reset()
-            toast.success(data.success, {
-                id: "create-subscriber"
-            })
-        },
-        onError: (error) => {
-            toast.error(error.message, {
-                id: "create-subscriber"
-            })
-        }
-    })
- 
-    function onSubmit(values: z.infer<typeof SubscribeSchema>) {
-        toast.loading("Subscribing...", {
-            id: "create-subscriber"
-        });
-        createSubscribe(values.email)
-    }
+export const NewsLetter = () => {
     return (
-        <div className="bg-white p-4 bg-gradient-to-r from-indigo-400 space-y-3 py-6">
-            <h1 className="text-center text-xl md:text-3xl font-bold">Get latest updates of our offer on your inbox.</h1>
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-center gap-x-2 justify-center w-full">
-                    <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormControl>
-                                <Input placeholder="Enter your email" className="w-full max-w-[400px] bg-white" {...field} disabled={isPending} />
-                            </FormControl>
-                            </FormItem>
-                        )}
-                    />
-                    <Button type="submit" disabled={isPending}>Subscribe</Button>
-                </form>
-            </Form>
+        <div className="w-full max-w-screen-xl mx-auto px-4 py-8 bg-gradient-to-r from-indigo-200 via-green-100 to-indigo-400 flex flex-col items-center space-y-5">
+            <h1 className="text-xl font-bold text-primary text-center">Unlock Your Earning Potential: Join as a Seller Now!</h1>
+            <Button asChild>
+                <Link href="/seller">Join Now</Link>
+            </Button>
         </div>
     )
 }

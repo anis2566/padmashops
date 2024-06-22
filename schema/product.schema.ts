@@ -17,6 +17,7 @@ export const ProductSchema = z.object({
         message: "required"
     }),
     discountPrice: z.number().optional(),
+    sellerPrice: z.number().optional(),
     totalStock: z.number().min(1, {
         message: "required"
     }),
@@ -49,6 +50,7 @@ export const VariantProductSchema = z.object({
         message: "required"
     }),
     discountPrice: z.number().optional(),
+    sellerPrice: z.number().optional(),
     featureImageUrl: z.string().min(1, {
         message: "required"
     }),

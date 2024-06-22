@@ -13,6 +13,7 @@ type SendNotification = {
         redirectUrl?: string;
         status?: string;
         invoice?: string;
+        withdraw?: number;
     }
 }
 

@@ -58,7 +58,7 @@ const Wishlist = () => {
                             <Button size="icon" variant="ghost" onClick={() => handleRemoveFromWishlist(product.id)}>
                                 <TrashIcon className="w-6 h-6 text-rose-500" />
                             </Button>
-                            <Button size="sm" onClick={() => handleAddToCart(product)}>Add to cart</Button>
+                            <Button size="sm" onClick={() => handleAddToCart(product)} disabled={product.totalStock === 0}>Add to cart</Button>
                         </div>
                     </div>
                 ))}

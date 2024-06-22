@@ -1,7 +1,7 @@
 import { DailyBestDeal } from "@/components/home/daily-best-deal"
 import { FeatureProducts } from "@/components/home/feature-products"
 import { Hero } from "@/components/home/hero"
-import { Newsletter } from "@/components/home/newsletter"
+import { NewsLetter } from "@/components/home/newsletter"
 import { PopularProducts } from "@/components/home/popular-products"
 import { ProductHouse } from "@/components/home/product-house"
 import { TopCategory } from "@/components/home/top-category"
@@ -15,7 +15,7 @@ const Home = () => {
       <DailyBestDeal />
       <FeatureProducts />
       <ProductHouse />
-      <Newsletter />
+      <NewsLetter />
     </div>
   )
 }

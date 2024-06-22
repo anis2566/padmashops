@@ -2,9 +2,9 @@ import { Loader2Icon } from "lucide-react"
 import { ClerkLoaded, ClerkLoading, UserButton } from "@clerk/nextjs"
 
 import { ModeToggle } from "@/components/mode-toggle"
-import { Notification } from "./notification"
 import { Logo } from "@/components/logo"
 import { NavbarDrawer } from "./nav-drawer"
+import { Notification } from "@/components/notification"
 
 export const Navbar = () => {
     return (

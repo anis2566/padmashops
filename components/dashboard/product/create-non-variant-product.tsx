@@ -56,6 +56,7 @@ export const CreateNonVariantProduct = () => {
             categoryId: "",
             price: undefined,
             discountPrice: undefined,
+            sellerPrice: undefined,
             totalStock: undefined,
             featureImageUrl: "",
             images: [],
@@ -268,8 +269,6 @@ export const CreateNonVariantProduct = () => {
                                 </CardContent>
                             </CardHeader>
                         </Card>
-                    </div>
-                    <div className="space-y-6">
                         <Card>
                             <CardHeader>
                                 <CardTitle>Category</CardTitle>
@@ -304,6 +303,8 @@ export const CreateNonVariantProduct = () => {
                                 </CardContent>
                             </CardHeader>
                         </Card>
+                    </div>
+                    <div className="space-y-6">
                         <Card>
                             <CardHeader>
                                 <CardTitle>Pricing</CardTitle>
@@ -332,6 +333,20 @@ export const CreateNonVariantProduct = () => {
                                             <FormLabel>Discount price</FormLabel>
                                             <FormControl>
                                                 <Input placeholder="Enter discount price..." {...field} onChange={(e) => field.onChange(parseInt(e.target.value))} type="number" />
+                                            </FormControl>
+                                            <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="sellerPrice"
+                                        disabled={isPending}
+                                        render={({ field }) => (
+                                            <FormItem>
+                                            <FormLabel>Seller price</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="Enter seller price..." {...field} onChange={(e) => field.onChange(parseInt(e.target.value))} type="number" />
                                             </FormControl>
                                             <FormMessage />
                                             </FormItem>

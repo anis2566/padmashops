@@ -26,6 +26,58 @@ model User {
   orders Order[]
   reviews Review[]
 
+  seller Seller?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Seller {
+  id String @id @default(uuid())
+  name String
+  email String
+  imageUrl String
+  phone String
+  address String
+
+  status String @default("pending")
+
+  userId String @unique
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  orders SellerOrder[]
+  bank Bank?
+  withdraws Withdraw[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Bank {
+  id String @id @default(uuid())
+  current Int
+  pending Int
+  withdraw Int
+  total Int
+
+  sellerId String @unique
+  seller Seller @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Withdraw {
+  id String @id @default(uuid())
+  amount Int
+  method String
+  number String
+  status String @default("pending")
+
+  sellerId String
+  seller Seller @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -73,6 +125,7 @@ model Product {
   totalStock  Int?
   price Int
   discountPrice Int?
+  sellerPrice Int?
   status  String @default("DRAFT")
   tags String[] @default([])
   colors String[] @default([])
@@ -90,6 +143,7 @@ model Product {
 
   stocks Stock[]
   orderProducts OrderProduct[]
+  sellerOrderProducts SellerOrderProduct[]
   reviews Review[]
 
   createdAt DateTime @default(now())
@@ -152,6 +206,7 @@ model Order {
   paymentMethod String
   paymentStatus String? @default("unpaid")
   deliveryFee Int @default(120)
+  trackingId String?
 
   userId String
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -177,6 +232,45 @@ model OrderProduct {
 
   productId String
   product Product @relation(fields: [productId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model SellerOrder {
+  id String @id @default(uuid())
+  invoiceId String 
+  customerName String
+  address String @db.Text
+  mobile String
+  total Int
+  deliveryFee Int
+  status String @default("pending")
+  trackingId String?
+
+  sellerId String
+  seller Seller @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+
+  products SellerOrderProduct[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SellerOrderProduct {
+  id String @id @default(uuid())
+  price Int
+  sellPrice Int
+  quantity Int
+  size String?
+  color String?
+
+  productId String 
+  product Product @relation(fields: [productId], references: [id])
+
+  orderId String
+  order SellerOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -216,3 +310,4 @@ model Message {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+

@@ -59,3 +59,19 @@ export const getAdmin = async () => {
         adminClerkId: admin.clerkId
     }
 }
+
+export const getSeller = async () => {
+    const { userId } = await getUser()
+    
+    const seller = await db.seller.findUnique({
+        where: {
+            userId
+        }
+    })
+
+    if (!seller) {
+        throw new Error("Seller not found")
+    }
+
+    return {sellerId: seller.id, seller}
+}

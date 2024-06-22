@@ -7,7 +7,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
-import { CLIENT_SIDEBAR, DASHBOARD_SIDEBAR } from "@/constant";
+import { CLIENT_SIDEBAR, DASHBOARD_SELLER_SIDEBAR, DASHBOARD_SIDEBAR } from "@/constant";
 import { Logo } from "@/components/logo";
 import { cn } from "@/lib/utils";
 
@@ -35,6 +35,25 @@ export const NavbarDrawer = () => {
                             <p className="text-sm italic text-muted-foreground px-2 lg:px-7">Main</p>
                                 {
                                     DASHBOARD_SIDEBAR.map(({label, icon:Icon, href}, i) => {
+                                        const active = pathname === href;
+                                        return (
+                                        <SheetClose asChild key={i}>
+                                            <Link
+                                            href={href}
+                                            className={cn("flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary", active && "bg-muted text-primary hover:text-primary")}
+                                            >
+                                            <Icon className="h-5 w-5" />
+                                            {label}
+                                            </Link>
+                                        </SheetClose>
+                                        )
+                                    })
+                                }
+                        </div>
+                        <div className="flex-1 mt-3">
+                            <p className="text-sm italic text-muted-foreground px-2 lg:px-7">Seller</p>
+                                {
+                                    DASHBOARD_SELLER_SIDEBAR.map(({label, icon:Icon, href}, i) => {
                                         const active = pathname === href;
                                         return (
                                         <SheetClose asChild key={i}>

@@ -100,7 +100,7 @@ export const CREATE_ORDER = async ({ order, products }: CreateOrder) => {
   const { adminClerkId } = await getAdmin();
 
   await sendNotification({
-    trigger: "new-order",
+    trigger: "order",
     recipients: [adminClerkId],
     actor: {
       id: clerkId,
@@ -203,7 +203,7 @@ export const UPDATE_ORDER = async ({
   const { adminClerkId } = await getAdmin();
 
   await sendNotification({
-    trigger: "new-order-admin",
+    trigger: "order-response",
     actor: {
       id: adminClerkId,
     },
@@ -224,13 +224,20 @@ export const UPDATE_ORDER = async ({
 
 
 export const GET_PENDING_ORDER = async () => {
-  const pendingOrders = await db.order.count({
-    where: {
-      status: "pending"
-    }
-  })
-console.log(pendingOrders)
+  const [pendingOrders, pendingSellerOrders] = await Promise.all([
+    db.order.count({
+      where: {
+        status: "pending"
+      }
+    }),
+    db.sellerOrder.count({
+      where: {
+        status: "pending"
+      }
+    }),
+  ])
   return {
-    pendingOrders
+    pendingOrders,
+    pendingSellerOrders
   }
 }

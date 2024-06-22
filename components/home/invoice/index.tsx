@@ -55,8 +55,7 @@ export const InvoicePDF = ({ order }: Props) => {
                             fontWeight: "bold"
                         }}
                     >
-                        <Text>E-</Text>
-                        <Text style={{ color: "green" }}>Shop</Text>
+                        <Text>PadmaShops-</Text>
                     </View>
                     <View style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
                         <Text style={{ fontSize: "12px", color: "#6b7280" }}>Invoice #{order.invoiceId}</Text>

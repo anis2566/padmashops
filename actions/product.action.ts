@@ -19,7 +19,7 @@ export const CREATE_PRODUCT = async (values: ProductSchemaType) => {
 
   await db.product.create({
     data: {
-      ...values,
+      ...data,
     },
   });
 
@@ -125,6 +125,7 @@ export const GET_PRODUCT = async (id: string) => {
       brand: true,
       stocks: true,
       category: true,
+      reviews: true
     },
   });
 
@@ -573,3 +574,21 @@ export const GET_PRODUCTS_CLIENT = async (search: string) => {
 }
 
 
+export const GET_PRODUCTS_FOR_SELLER = async (search: string) => {
+
+  const products = await db.product.findMany({
+    where: {
+      ...(search && { name: { contains: search, mode: "insensitive" } }),
+      totalStock: {
+        gt: 0
+      }
+    },
+    include: {
+      stocks: true
+    }
+  });
+
+  return {
+    products,
+  };
+};

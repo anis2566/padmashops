@@ -50,6 +50,7 @@ export const ProductList = ({ products}: Props) => {
                             <TableHead className="px-1">Name</TableHead>
                             <TableHead className="px-1">Price</TableHead>
                             <TableHead className="px-1">D. Price</TableHead>
+                            <TableHead className="px-1">S. Price</TableHead>
                             <TableHead className="px-1">Stock</TableHead>
                             <TableHead className="px-1">Status</TableHead>
                             <TableHead className="px-1">Action</TableHead>
@@ -68,6 +69,7 @@ export const ProductList = ({ products}: Props) => {
                                     <TableCell className="px-1 py-2">{product.name.slice(0,30)}</TableCell>
                                     <TableCell className="px-1 py-2">{product.price}</TableCell>
                                     <TableCell className="px-1 py-2">{product.discountPrice || "-"}</TableCell>
+                                    <TableCell className="px-1 py-2">{product.sellerPrice || "-"}</TableCell>
                                     <TableCell className="px-1 py-2">{product.totalStock}</TableCell>
                                     <TableCell className="px-1 py-2">
                                         <Badge

@@ -25,6 +25,7 @@ import { GET_BRANDS } from "@/actions/brand.action";
 import { GET_CATEGORIES } from "@/actions/category.action";
 import { ProductSchema } from "@/schema/product.schema";
 import { EDIT_PRODUCT } from "@/actions/product.action";
+import { cn } from "@/lib/utils";
 
 interface ProductWithStock extends Product {
     stocks?: Stock[]
@@ -61,6 +62,7 @@ export const EditProductForm = ({product}:Props) => {
             categoryId: product.categoryId || "",
             price: product.price || undefined,
             discountPrice: product.discountPrice || undefined,
+            sellerPrice: product.sellerPrice || undefined,
             totalStock: product.totalStock || undefined,
             featureImageUrl: product.featureImageUrl || "",
             images: product.images || [],
@@ -282,8 +284,6 @@ export const EditProductForm = ({product}:Props) => {
                                 </Link>
                             </Button>
                         }
-                    </div>
-                    <div className="space-y-6">
                         <Card>
                             <CardHeader>
                                 <CardTitle>Category</CardTitle>
@@ -318,6 +318,8 @@ export const EditProductForm = ({product}:Props) => {
                                 </CardContent>
                             </CardHeader>
                         </Card>
+                    </div>
+                    <div className="space-y-6">
                         <Card>
                             <CardHeader>
                                 <CardTitle>Pricing</CardTitle>
@@ -351,10 +353,24 @@ export const EditProductForm = ({product}:Props) => {
                                             </FormItem>
                                         )}
                                     />
+                                    <FormField
+                                        control={form.control}
+                                        name="sellerPrice"
+                                        disabled={isPending}
+                                        render={({ field }) => (
+                                            <FormItem>
+                                            <FormLabel>Seller price</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="Enter seller price..." {...field} onChange={(e) => field.onChange(parseInt(e.target.value))} type="number" />
+                                            </FormControl>
+                                            <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
                                 </CardContent>
                             </CardHeader>
                         </Card>
-                        <Card>
+                        <Card className={cn("", !product.stocks || product.stocks.length === 0 ? "hidden" : "")}>
                             <CardHeader>
                                 <CardTitle>Stock</CardTitle>
                                 <CardDescription>Provide product stock</CardDescription>

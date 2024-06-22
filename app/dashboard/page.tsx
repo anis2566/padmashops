@@ -25,7 +25,7 @@ import { Button } from "@/components/ui/button"
 import { cn, formatPriceBDT } from "@/lib/utils"
 import { GET_ADMIN_DASHBOARD_DATA, GET_RECENT_ORDERS } from "@/actions/dashboard.action"
 import { MostSaleProducts } from "@/components/dashboard/charts/most-sale"
-import { WeeklySales } from "@/components/dashboard/charts/weekly-sales"
+import { WeeklySales, WeeklySellerOrder } from "@/components/dashboard/charts/weekly-sales"
 import { WeeklyOrders } from "@/components/dashboard/charts/weekly-orders"
 
 const Dashboard = () => {
@@ -205,13 +205,13 @@ const Dashboard = () => {
 
             <div className="grid gap-4 grid-cols-1 md:grid-cols-2 md:gap-8">
                 <div className="flex flex-col space-y-4 w-full min-h-[300px] rounded-lg border bg-card text-card-foreground shadow-sm p-3">
-                    <p className="text-xl font-bold">Weekly {activeTab}</p>
+                    <p className="text-xl font-bold">Weekly Stat</p>
                     <div className="flex items-center justify-center rounded-md bg-muted p-1">
-                        <div className={cn("rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all flex-1 cursor-pointer",activeTab === "sales" && "bg-background")} onClick={() => setActiveTab("sales")}>
-                            Sales
+                        <div className={cn("rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all flex-1 cursor-pointer",activeTab === "seller" && "bg-background")} onClick={() => setActiveTab("seller")}>
+                            Seller
                         </div>
-                        <div className={cn("rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all flex-1 cursor-pointer",activeTab === "orders" && "bg-background")} onClick={() => setActiveTab("orders")}>
-                            Orders
+                        <div className={cn("rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all flex-1 cursor-pointer",activeTab === "customer" && "bg-background")} onClick={() => setActiveTab("customer")}>
+                            Customer
                         </div>
                     </div>
                     {
@@ -220,13 +220,13 @@ const Dashboard = () => {
                         ) : (
                                 <>
                                     {
-                                        activeTab === "sales" && (
-                                            <WeeklySales weeklySales={data?.weeklyStat ?? []} />
+                                        activeTab === "seller" && (
+                                            <WeeklySellerOrder weeklyOrders={data?.weeklySellerOrderStat ?? []} />
                                         )
                                     }
                                     {
-                                        activeTab === "orders" && (
-                                            <WeeklyOrders weeklyOrders={data?.weeklyStat ?? []} />
+                                        activeTab === "customer" && (
+                                            <WeeklyOrders weeklyOrders={data?.weeklyOrderStat ?? []} />
                                         )
                                     }
                                 </>

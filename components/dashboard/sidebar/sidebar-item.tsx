@@ -12,16 +12,17 @@ interface SidebarItemProps {
     href: string,
     icon: LucideIcon;
     pendingOrders?: number;
+    pendingOrdersSeller?: number;
 }
 
-export const SidebarItem = ({ label, href, icon: Icon, pendingOrders }: SidebarItemProps) => {
+export const SidebarItem = ({ label, href, icon: Icon, pendingOrders, pendingOrdersSeller }: SidebarItemProps) => {
 
 
 
     const pathname = usePathname()
 
     // List of routes that require an exact match
-    const exactMatchRoutes = ["/dashboard"]
+    const exactMatchRoutes = ["/dashboard", "/dashboard/seller/request", "/dashboard/seller", "/dashboard/seller/orders", "/dashboard/seller/withdraw"]
 
     // Check if the current pathname matches exactly or starts with the href
     const active = exactMatchRoutes.includes(href)
@@ -41,10 +42,18 @@ export const SidebarItem = ({ label, href, icon: Icon, pendingOrders }: SidebarI
             <Badge
                 className={cn(
                     "ml-auto hidden h-6 w-6 shrink-0 items-center justify-center rounded-full",
-                    label === "Orders" && "flex"
+                    href === "/dashboard/orders" && "flex"
                 )}
             >
                 {pendingOrders}
+            </Badge>
+            <Badge
+                className={cn(
+                    "ml-auto hidden h-6 w-6 shrink-0 items-center justify-center rounded-full",
+                    href === "/dashboard/seller/orders" && "flex"
+                )}
+            >
+                {pendingOrdersSeller}
             </Badge>
         </Link>
     )

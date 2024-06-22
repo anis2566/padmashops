@@ -85,16 +85,16 @@ export const ProductCard = ({ product }: Props) => {
                 </div>
             </Link>
             <div className="flex items-center gap-x-1 md:gap-x-2">
-                <Button className="flex-1 p-2" onClick={handleOrder}>Order Now</Button>
+                <Button disabled={product.totalStock === 0} className="flex-1 p-2" onClick={handleOrder}>{product.totalStock === 0 ? "Out of Stock" : "Order Now"}</Button>
                 <TooltipProvider>
                     <Tooltip delayDuration={0}>
                         <TooltipTrigger asChild>
-                            <Button variant="ghost" size="icon" onClick={handleAddToCart}>
+                            <Button variant="ghost" size="icon" onClick={handleAddToCart} disabled={product.totalStock === 0}>
                                 <ShoppingCart className="w-5 h-5" />
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent>
-                            <p>Add to Cart</p>
+                            <p>{product.totalStock === 0 ? "Out of stock" : "Add to Cart"}</p>
                         </TooltipContent>
                     </Tooltip>
                 </TooltipProvider>

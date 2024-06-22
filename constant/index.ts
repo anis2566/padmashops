@@ -75,23 +75,23 @@ import {
   
   export const DASHBOARD_SELLER_SIDEBAR = [
     {
-      label: "Seller Requests",
-      href: "/dashboard/sellers/request",
+      label: "Requests",
+      href: "/dashboard/seller/request",
       icon: Radio,
     },
     {
       label: "Sellers",
-      href: "/dashboard/sellers",
+      href: "/dashboard/seller",
       icon: Users,
     },
     {
       label: "Orders",
-      href: "/dashboard/sellers/orders",
+      href: "/dashboard/seller/orders",
       icon: ShoppingCart,
     },
     {
       label: "Withdraw",
-      href: "/dashboard/sellers/withdraw",
+      href: "/dashboard/seller/withdraw",
       icon: HandCoins,
     },
   ] as const;

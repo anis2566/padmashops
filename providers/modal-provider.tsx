@@ -11,7 +11,13 @@ import { RemoveFeatureProductModal } from "@/components/dashboard/modals/feature
 import { MessageModal } from "@/components/dashboard/modals/message.modal"
 import { RemovePopularProductModal } from "@/components/dashboard/modals/popular-product.modal"
 import { DeleteProductModal } from "@/components/dashboard/modals/product.modal"
+import { SellerStatusModal } from "@/components/dashboard/modals/seller-status.modal"
+import { DeleteSellerModal } from "@/components/dashboard/modals/seller.modal"
+import { TrackingModal } from "@/components/dashboard/modals/tracking.modal"
+import { WithdrawStatusModal } from "@/components/dashboard/modals/withdraw.modal"
 import { DeleteAddressModal } from "@/components/home/modal/address-modal"
+import { RegisterSuccessModal } from "@/components/seller/register/register-modal"
+import { WithdrawModal } from "@/components/seller/withdraw/withdraw.modal"
 
 export const ModalProvider = () => {
     return (
@@ -30,6 +36,12 @@ export const ModalProvider = () => {
             <RemoveFeatureProductModal />
             <DeleteCustomerModal />
             <MessageModal />
+            <SellerStatusModal />
+            <DeleteSellerModal />
+            <TrackingModal />
+            <WithdrawModal />
+            <WithdrawStatusModal />
+            <RegisterSuccessModal />
         </>
     )
 }
