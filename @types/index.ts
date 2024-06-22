@@ -4,5 +4,4 @@ export interface ProductWithFeature extends Product {
   stocks?: Stock[];
   category: Category | null;
   brand: Brand | null;
-  reviews?: Review;
 }
