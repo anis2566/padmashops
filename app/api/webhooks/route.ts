@@ -88,7 +88,6 @@ export async function POST(req: Request) {
         clerkId: evt.data.id,
       },
       data: {
-        clerkId: evt.data.id,
         email: evt.data.email_addresses[0].email_address,
         name: `${evt.data.first_name} ${evt.data.last_name}`,
         imageUrl: evt.data.image_url,
