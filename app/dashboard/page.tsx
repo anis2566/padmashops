@@ -25,7 +25,7 @@ import { Button } from "@/components/ui/button"
 import { cn, formatPriceBDT } from "@/lib/utils"
 import { GET_ADMIN_DASHBOARD_DATA, GET_RECENT_ORDERS } from "@/actions/dashboard.action"
 import { MostSaleProducts } from "@/components/dashboard/charts/most-sale"
-import { WeeklySales, WeeklySellerOrder } from "@/components/dashboard/charts/weekly-sales"
+import { WeeklySellerOrder } from "@/components/dashboard/charts/weekly-sales"
 import { WeeklyOrders } from "@/components/dashboard/charts/weekly-orders"
 
 const Dashboard = () => {
