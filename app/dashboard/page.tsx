@@ -29,7 +29,7 @@ import { WeeklySellerOrder } from "@/components/dashboard/charts/weekly-sales"
 import { WeeklyOrders } from "@/components/dashboard/charts/weekly-orders"
 
 const Dashboard = () => {
-    const [activeTab, setActiveTab] = useState<string>("sales")
+    const [activeTab, setActiveTab] = useState<string>("seller")
 
     const { data, isLoading } = useQuery({
         queryKey: ["ge-dashboard-data"],

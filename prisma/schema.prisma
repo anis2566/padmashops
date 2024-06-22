@@ -9,13 +9,13 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id String @id @default(uuid())
-  clerkId String @unique
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  clerkId String @unique @db.ObjectId
   name    String
   email   String
   imageUrl String?
@@ -33,7 +33,7 @@ model User {
 }
 
 model Seller {
-  id String @id @default(uuid())
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
   name String
   email String
   imageUrl String
@@ -42,7 +42,7 @@ model Seller {
 
   status String @default("pending")
 
-  userId String @unique
+  userId String @unique @db.ObjectId
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   orders SellerOrder[]
@@ -54,13 +54,13 @@ model Seller {
 }
 
 model Bank {
-  id String @id @default(uuid())
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
   current Int
   pending Int
   withdraw Int
   total Int
 
-  sellerId String @unique
+  sellerId String @unique @db.ObjectId
   seller Seller @relation(fields: [sellerId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
@@ -69,13 +69,13 @@ model Bank {
 
 
 model Withdraw {
-  id String @id @default(uuid())
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
   amount Int
   method String
   number String
   status String @default("pending")
 
-  sellerId String
+  sellerId String @db.ObjectId
   seller Seller @relation(fields: [sellerId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
@@ -83,7 +83,7 @@ model Withdraw {
 }
 
 model Subscriber {
-  id String @id @default(uuid())
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
   email   String
 
   createdAt DateTime @default(now())
@@ -91,8 +91,8 @@ model Subscriber {
 }
 
 model Brand {
-  id String @id @default(uuid())
-  name String @unique
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  name String @unique @db.ObjectId
   imageUrl String
 
   products Product[]
@@ -103,9 +103,9 @@ model Brand {
 
 
 model Category {
-  id String @id @default(uuid())
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
   name String
-  description String? @db.Text
+  description String?
   imageUrl String
   tags String[] @default([])
 
@@ -117,9 +117,9 @@ model Category {
 
 
 model Product {
-  id String @id @default(uuid())
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
   name  String
-  description String @db.Text
+  description String
   featureImageUrl String
   images  String[] @default([])
   totalStock  Int?
@@ -135,10 +135,10 @@ model Product {
   ratingCount      Int        @default(0)
   totalSell Int @default(0)
 
-  categoryId String?
+  categoryId String? @db.ObjectId
   category  Category? @relation(fields: [categoryId], references: [id])
 
-  brandId String?
+  brandId String? @db.ObjectId
   brand  Brand? @relation(fields: [brandId], references: [id])
 
   stocks Stock[]
@@ -152,12 +152,12 @@ model Product {
 
 
 model Stock {
-  id String @id @default(uuid())
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
   stock Int
   size  String
   color String?
 
-  productId String?
+  productId String? @db.ObjectId
   product Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
@@ -166,7 +166,7 @@ model Stock {
 
 
 model Coupon {
-  id String @id @default(uuid())
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
   name String
   code String
   imageUrl String?
@@ -181,14 +181,14 @@ model Coupon {
 
 
 model ShippingInfo {
-  id String @id @default(uuid())
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
   title String?
   name String
   division String
   address String
   phone String
 
-  userId String?
+  userId String? @db.ObjectId
   user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   orders Order[]
@@ -199,7 +199,7 @@ model ShippingInfo {
 
 
 model Order {
-  id String @id @default(uuid())
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
   invoiceId String
   total Int
   status String @default("pending")
@@ -208,10 +208,10 @@ model Order {
   deliveryFee Int @default(120)
   trackingId String?
 
-  userId String
+  userId String @db.ObjectId
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  shippingInfoId String
+  shippingInfoId String @db.ObjectId
   shippingInfo ShippingInfo @relation(fields: [shippingInfoId], references: [id])
 
   products OrderProduct[]
@@ -221,16 +221,16 @@ model Order {
 }
 
 model OrderProduct {
-  id String @id @default(uuid())
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
   quantity Int
   size String?
   color String?
   price Int  
 
-  orderId String
+  orderId String @db.ObjectId
   order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
-  productId String
+  productId String @db.ObjectId
   product Product @relation(fields: [productId], references: [id])
 
   createdAt DateTime @default(now())
@@ -239,17 +239,17 @@ model OrderProduct {
 
 
 model SellerOrder {
-  id String @id @default(uuid())
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
   invoiceId String 
   customerName String
-  address String @db.Text
+  address String
   mobile String
   total Int
   deliveryFee Int
   status String @default("pending")
   trackingId String?
 
-  sellerId String
+  sellerId String @db.ObjectId
   seller Seller @relation(fields: [sellerId], references: [id], onDelete: Cascade)
 
   products SellerOrderProduct[]
@@ -259,17 +259,17 @@ model SellerOrder {
 }
 
 model SellerOrderProduct {
-  id String @id @default(uuid())
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
   price Int
   sellPrice Int
   quantity Int
   size String?
   color String?
 
-  productId String 
+  productId String @db.ObjectId
   product Product @relation(fields: [productId], references: [id])
 
-  orderId String
+  orderId String @db.ObjectId
   order SellerOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
@@ -278,14 +278,14 @@ model SellerOrderProduct {
 
 
 model Review {
-  id String @id @default(uuid())
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
   rating Float 
   comment String
 
-  userId String
+  userId String @db.ObjectId
   user User @relation(fields: [userId], references: [id])
 
-  productId String
+  productId String @db.ObjectId
   product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
@@ -293,7 +293,7 @@ model Review {
 }
 
 model Banner {
-  id String @id @default(uuid())
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
   imageUrl String
   status String @default("draft")
 
@@ -302,7 +302,7 @@ model Banner {
 }
 
 model Message {
-  id String @id @default(uuid())
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
   name String
   email String
   message String

@@ -14,7 +14,7 @@ import { AppKnockProviders } from "@/providers/knock-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "E-Shop | Next Generation Ecomerce Website", 
+  title: "PadmaShops | Next Generation Ecomerce Website", 
   description: "Popular e-commerce website in bangladesh",
 };
 
