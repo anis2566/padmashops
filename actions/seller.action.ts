@@ -6,7 +6,6 @@ import { sendNotification } from "@/services/notification.services"
 import { getAdmin, getUser } from "@/services/user.services"
 import { clerkClient } from "@clerk/nextjs/server"
 import { revalidatePath } from "next/cache"
-import { clerkClient as clerkClientSdk } from "@clerk/clerk-sdk-node"; 
 
 export const CREATE_SELLER = async (values: SellerSchemaType) => {
     const { data, success } = SellerSchema.safeParse(values)
