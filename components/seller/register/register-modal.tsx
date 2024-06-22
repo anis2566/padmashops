@@ -21,7 +21,7 @@ export const RegisterSuccessModal = () => {
                 <div className="space-y-4">
                     <p className="text-center text-md text-primary">Re login to switch role.</p>
 
-                    <SignOutButton redirectUrl="/sign-in">
+                    <SignOutButton redirectUrl="/seller">
                         <Button variant="ghost" className="py-0 flex items-center gap-x-2 bg-primary text-white mx-auto hover:bg-primary/80" onClick={onClose}>
                             Login
                         </Button>
