@@ -16,6 +16,7 @@ import { DeleteSellerModal } from "@/components/dashboard/modals/seller.modal"
 import { TrackingModal } from "@/components/dashboard/modals/tracking.modal"
 import { WithdrawStatusModal } from "@/components/dashboard/modals/withdraw.modal"
 import { DeleteAddressModal } from "@/components/home/modal/address-modal"
+import { QuickOrderModal } from "@/components/home/modal/quick-order-modal"
 import { RegisterSuccessModal } from "@/components/seller/register/register-modal"
 import { WithdrawModal } from "@/components/seller/withdraw/withdraw.modal"
 
@@ -42,6 +43,7 @@ export const ModalProvider = () => {
             <WithdrawModal />
             <WithdrawStatusModal />
             <RegisterSuccessModal />
+            <QuickOrderModal />
         </>
     )
 }

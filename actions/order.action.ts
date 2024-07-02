@@ -224,7 +224,7 @@ export const UPDATE_ORDER = async ({
 
 
 export const GET_PENDING_ORDER = async () => {
-  const [pendingOrders, pendingSellerOrders] = await Promise.all([
+  const [pendingOrders, pendingSellerOrders, pendingQuickOrder] = await Promise.all([
     db.order.count({
       where: {
         status: "pending"
@@ -235,9 +235,15 @@ export const GET_PENDING_ORDER = async () => {
         status: "pending"
       }
     }),
+    db.quickOrder.count({
+      where: {
+        status: "PENDING"
+      }
+    })
   ])
   return {
     pendingOrders,
-    pendingSellerOrders
+    pendingSellerOrders,
+    pendingQuickOrder
   }
 }

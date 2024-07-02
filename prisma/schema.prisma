@@ -145,6 +145,7 @@ model Product {
   orderProducts OrderProduct[]
   sellerOrderProducts SellerOrderProduct[]
   reviews Review[]
+  quickOrders QuickOrder[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -311,3 +312,24 @@ model Message {
   updatedAt DateTime @updatedAt
 }
 
+
+model QuickOrder {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  address String
+  phone String
+
+  quantity Int
+  size String?
+  color String?
+  deliveryFee Int
+  total Int
+
+  status String @default("PENDING")
+
+  productId String? @db.ObjectId
+  product Product? @relation(fields: [productId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

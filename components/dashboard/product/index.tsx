@@ -25,6 +25,7 @@ import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { useProduct } from "@/hooks/use-product"
 import { Empty } from "@/components/empty"
+import { CopyButton } from "./copy-button"
 
 interface ProductWithStock extends Product {
     stocks?: Stock[]
@@ -99,6 +100,9 @@ export const ProductList = ({ products}: Props) => {
                                                 <DropdownMenuItem className="w-flex items-center gap-x-3" onClick={() => onOpen(product.id)}>
                                                     <Trash2 className="text-rose-500 w-4 h-4" />
                                                     Delete
+                                                </DropdownMenuItem>
+                                                <DropdownMenuItem asChild>
+                                                    <CopyButton id={product.id} />
                                                 </DropdownMenuItem>
                                             </DropdownMenuContent>
                                         </DropdownMenu>

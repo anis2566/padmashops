@@ -13,9 +13,10 @@ interface SidebarItemProps {
     icon: LucideIcon;
     pendingOrders?: number;
     pendingOrdersSeller?: number;
+    pendingQuickOrder?: number;
 }
 
-export const SidebarItem = ({ label, href, icon: Icon, pendingOrders, pendingOrdersSeller }: SidebarItemProps) => {
+export const SidebarItem = ({ label, href, icon: Icon, pendingOrders, pendingOrdersSeller, pendingQuickOrder }: SidebarItemProps) => {
 
 
 
@@ -54,6 +55,14 @@ export const SidebarItem = ({ label, href, icon: Icon, pendingOrders, pendingOrd
                 )}
             >
                 {pendingOrdersSeller}
+            </Badge>
+            <Badge
+                className={cn(
+                    "ml-auto hidden h-6 w-6 shrink-0 items-center justify-center rounded-full",
+                    href === "/dashboard/quick-order" && "flex"
+                )}
+            >
+                {pendingQuickOrder}
             </Badge>
         </Link>
     )

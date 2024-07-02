@@ -8,11 +8,11 @@ import { Logo } from "@/components/logo"
 import { CLIENT_SIDEBAR, DASHBOARD_SELLER_SIDEBAR, DASHBOARD_SIDEBAR } from "@/constant"
 import { SidebarItem } from "@/components/dashboard/sidebar/sidebar-item"
 import { GET_PENDING_ORDER } from "@/actions/order.action"
-import { Headset } from "lucide-react"
+import { Headset, ShoppingCart } from "lucide-react"
 
 export const Sidebar = () => {
 
-    const {data} = useQuery({
+    const { data } = useQuery({
         queryKey: ["pending-order-count"],
         queryFn: async () => {
             const res = await GET_PENDING_ORDER()
@@ -29,6 +29,15 @@ export const Sidebar = () => {
                     <Logo callbackUrl="/dashboard" />
                 </div>
                 <div className="space-y-1 overflow-y-auto">
+                    <div className="flex h-full max-h-screen flex-col gap-2">
+                        <div className="flex-1 mt-3 space-y-1">
+                            <p className="text-sm italic text-muted-foreground px-2 lg:px-7">Quick Order</p>
+                            <Separator />
+                            <nav className="grid items-start px-2 text-sm font-medium lg:px-4 pt-2">
+                                <SidebarItem href="/dashboard/quick-order" icon={ShoppingCart} label="Orders" pendingQuickOrder={data?.pendingQuickOrder ?? 0} />
+                            </nav>
+                        </div>
+                    </div>
                     <div className="flex h-full max-h-screen flex-col gap-2">
                         <div className="flex-1 mt-3 space-y-1">
                             <p className="text-sm italic text-muted-foreground px-2 lg:px-7">Main</p>
