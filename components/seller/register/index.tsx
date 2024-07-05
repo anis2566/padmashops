@@ -41,7 +41,7 @@ export const SellerRegisterForm = () => {
         mutationFn: CREATE_SELLER,
         onSuccess: (data) => {
             onOpenConfetti()
-            onOpen()
+            router.push("/")
             form.reset()
             toast.success(data.success, {
                 id: "create-seller"
