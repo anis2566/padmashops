@@ -585,7 +585,8 @@ export const GET_PRODUCTS_FOR_SELLER = async (search: string) => {
     },
     include: {
       stocks: true
-    }
+    },
+    take: 3
   });
 
   return {
